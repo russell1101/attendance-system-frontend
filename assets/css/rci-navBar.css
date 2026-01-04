@@ -1,0 +1,299 @@
+/* rci-navBar.css - 修正版 */
+
+/* === 基礎樣式 === */
+* {
+    box-sizing: border-box;
+}
+
+/* Sidebar 主容器 */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 70px; /* 桌面版預設收合 */
+    height: 100vh;
+    background-color: #2a2f3e;
+    color: #9097a7;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1040;
+    transition: width 0.3s ease;
+}
+
+/* Sidebar 展開狀態（桌面版） */
+.sidebar.expanded {
+    width: 260px;
+}
+
+/* === 漢堡選單按鈕（手機版） === */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    background: #00b8d9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.sidebar-toggle:hover {
+    background: #0097b8;
+}
+
+.hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: white;
+    margin: 4px auto;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.sidebar-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* === Logo 區域 === */
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.logo-lg {
+    display: none;
+    max-width: 180px;
+    height: 60px;
+}
+
+/* 預設顯示小 Logo */
+.logo-sm {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+/* 展開狀態切換 (桌面版) */
+.sidebar.expanded .logo-sm {
+    display: none;
+}
+.sidebar.expanded .logo-lg {
+    display: block;
+}
+
+/* === 內容區域 === */
+.sidebar-content {
+    padding: 20px 0;
+}
+
+/* Menu 項目 */
+.menu-section {
+    margin-bottom: 15px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    color: #9097a7;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    justify-content: center;
+}
+
+.sidebar.expanded .menu-link {
+    justify-content: flex-start;
+    padding: 10px 20px;
+}
+
+.menu-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Icon 樣式 */
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.sidebar.expanded .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+
+/* Text 樣式 - 收合時隱藏 */
+.menu-text {
+    display: none;
+    opacity: 0;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.sidebar.expanded .menu-text {
+    display: inline;
+    opacity: 1;
+}
+
+/* Tooltip - 收合時顯示 */
+.sidebar:not(.expanded) .menu-link:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    z-index: 1000;
+    margin-left: 10px;
+}
+
+/* 主內容區域 */
+body.has-sidebar {
+    padding-left: 70px;
+    transition: padding-left 0.3s ease;
+}
+
+body.has-sidebar.expanded {
+    padding-left: 260px;
+}
+
+/* === 遮罩層 === */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1030;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* === 關閉按鈕（手機版） === */
+.sidebar-close {
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: transparent;
+    border: none;
+    color: #9097a7;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* === 響應式設計 - 重要修正 === */
+@media (max-width: 767px) {
+
+    .logo-sm {
+        display: none !important;
+    }
+    .logo-lg {
+        display: block !important;
+        width: auto !important;
+        height: 60px !important;
+    }
+    /* 顯示漢堡選單 */
+    .sidebar-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 顯示關閉按鈕 */
+    .sidebar-close {
+        display: block !important;
+    }
+    
+    /* Sidebar 手機版樣式 */
+    .sidebar {
+        width: 260px !important; /* 手機版固定寬度 */
+        transform: translateX(-100%);
+        z-index: 1040;
+    }
+    
+    /* Sidebar 顯示狀態 */
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* 移除桌面版的 expanded 類別效果 */
+    .sidebar.expanded {
+        width: 260px !important;
+    }
+    
+    /* 主內容不需要 padding */
+    body.has-sidebar,
+    body.has-sidebar.expanded {
+        padding-left: 0 !important;
+    }
+    
+    /* 手機版強制顯示所有內容 */
+    .menu-text {
+        display: inline !important;
+        opacity: 1 !important;
+    }
+    
+    .menu-icon {
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 12px !important;
+    }
+    
+    .menu-link {
+        justify-content: flex-start !important;
+        padding: 10px 20px !important;
+    }
+    
+}
