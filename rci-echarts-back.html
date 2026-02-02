@@ -1,0 +1,196 @@
+<!doctype html>
+<html
+  lang="zh-TW"
+  data-layout="vertical"
+  data-topbar="light"
+  data-sidebar="dark"
+  data-sidebar-size="sm-hover"
+  data-sidebar-image="none"
+  data-preloader="disable"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title>出勤管理 | RCI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <!-- Layout config Js -->
+    <script src="assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link
+      href="assets/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- NavBar CSS -->
+    <link href="assets/css/rci-navBar.css" rel="stylesheet" />
+    <!-- 出勤管理圖表 CSS -->
+    <link href="assets/css/page-back/rci-attendance.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <!-- NavBar 容器 -->
+      <div id="navBar-placeholder"></div>
+
+      <!-- ============================================================== -->
+      <!-- Start Main Content -->
+      <!-- ============================================================== -->
+      <div class="main-content">
+        <div class="page-content">
+          <div class="container-fluid">
+            <div class="chartPage-header">
+              <!-- 頁面標題 -->
+              <div class="page-header">
+                <h1 class="page-title">出勤管理</h1>
+              </div>
+
+              <!-- 篩選區域 -->
+              <div class="filter-section">
+                <div class="filter-row">
+                  <!-- 時間範圍按鈕 -->
+                  <div class="filter-group">
+                    <button class="filter-btn active" data-range="month">
+                      當月
+                    </button>
+                    <button class="filter-btn" data-range="3months">
+                      3個月
+                    </button>
+                    <button class="filter-btn" data-range="half">半年</button>
+                  </div>
+
+                  <!-- 自訂日期 -->
+                  <div class="filter-group">
+                    <span style="color: #6c757d; font-size: 14px"
+                      >自訂日期</span
+                    >
+                    <input type="date" class="filter-date" id="startDate" />
+                    <span style="color: #6c757d">－</span>
+                    <input type="date" class="filter-date" id="endDate" />
+                  </div>
+
+                  <!-- 部門/員工下拉 -->
+                  <div class="filter-group">
+                    <select class="filter-select" id="departmentSelect">
+                      <option value="">全公司</option>
+                      <option value="1">研發部</option>
+                      <option value="2">業務部</option>
+                      <option value="3">人資部</option>
+                    </select>
+                    <select class="filter-select" id="employeeSelect">
+                      <option value="">全體員工</option>
+                      <option value="1">王小明</option>
+                      <option value="2">李小華</option>
+                    </select>
+                  </div>
+
+                  <!-- 搜尋按鈕 -->
+                  <button class="filter-search-btn" id="searchBtn">搜尋</button>
+                  <button class="filter-download-btn" id="downloadBtn">下載</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 圖表區域 - 2x2 Grid -->
+            <div class="charts-grid">
+              <!-- 1. 出勤狀態圓餅圖 -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4 class="chart-title">出勤狀態圓餅圖</h4>
+                </div>
+                <div class="chart-body">
+                  <div id="chartPie" class="echart-container echart-pie"></div>
+                </div>
+              </div>
+
+              <!-- 2. 部門/人員遲到排行 (Horizontal Bar) -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4 class="chart-title">部門/人員遲到排行</h4>
+                </div>
+                <div class="chart-body">
+                  <div
+                    id="chartBarHorizontal"
+                    class="echart-container echart-bar-horizontal"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- 3. 工時統計圖 (Vertical Bar) -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4 class="chart-title">工時統計圖</h4>
+                </div>
+                <div class="chart-body">
+                  <div id="chartBarVertical" class="echart-container"></div>
+                </div>
+              </div>
+
+              <!-- 4. 打卡時間分佈圖 (Scatter) -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4 class="chart-title">打卡時間分佈圖</h4>
+                </div>
+                <div class="chart-body">
+                  <div
+                    id="chartScatter"
+                    class="echart-container echart-scatter"
+                  ></div>
+                </div>
+                <!-- 統計摘要 -->
+                <div class="stats-summary">
+                  <div class="stat-item">
+                    <div class="stat-label">本月遲到總人次</div>
+                    <div class="stat-value warning" id="statLateCount">85</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-label">平均出勤率</div>
+                    <div class="stat-value highlight" id="statAttendanceRate">
+                      98%
+                    </div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-label">異常未打卡</div>
+                    <div class="stat-value danger" id="statMissingCount">
+                      3 人
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end charts-grid -->
+          </div>
+        </div>
+      </div>
+      <!-- End Main Content -->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- JAVASCRIPT -->
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- ECharts JS -->
+    <script src="assets/libs/echarts/echarts.min.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+    <!-- NavBar loader -->
+    <script src="assets/js/importFile/navBar-loader.js"></script>
+
+    <!-- 出勤圖表初始化 -->
+    <script src="assets/js/pages/page-back/rci-attendance-charts.js"></script>
+  </body>
+</html>
