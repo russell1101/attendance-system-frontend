@@ -1,4 +1,3 @@
-img#rci-cart-logo-light {
-    width: 100px;
-    height: 40px;
+.dropdown-toggle::after{
+    display: none;
 }
