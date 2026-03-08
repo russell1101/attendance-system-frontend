@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Header 容器 */
+.header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 60px;
+}
+
+.header-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+/* 左側區域 */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+/* Logo 區域 */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    width: 140px;
+}
+
+
+.logo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo {
+    width: 140px;
+    height: 40px;
+    background-color: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+/* 導航選單 */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 40px;
+    margin-bottom: 0;
+}
+
+/* 基礎樣式調整 */
+.nav-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 確保圖示與文字垂直對齊 */
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* 預設文字顏色 */
+.nav-link {
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* --- 同步變色邏輯 --- */
+
+/* 當 active 或 hover 時，文字變藍 */
+.nav-item.active .nav-link,
+.nav-item:hover .nav-link {
+    color: #1890ff;
+}
+
+/* 當 active 或 hover 時，圖片變藍 */
+.nav-item.active img,
+.nav-item:hover img {
+    filter: invert(41%) sepia(60%) saturate(1663%) hue-rotate(190deg) brightness(99%) contrast(104%);
+}
+
+/* 底部藍條 (僅在 active 狀態顯示) */
+.nav-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 30px;
+    height: 3px;
+    background: #1890ff;
+    border-radius: 2px;
+}
+
+/* 右側區域 */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* 通知圖標 */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.notification-icon:hover {
+    background-color: #f5f5f5;
+}
+
+.notification-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #666;
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #ff4d4f;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+}
+
+/* 使用者選單 */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.user-menu:hover {
+    background-color: #f5f5f5;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.user-avatar svg {
+    width: 20px;
+    height: 20px;
+    stroke: #999;
+    fill: none;
+    stroke-width: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 16px;
+    }
+
+    .header-left {
+        gap: 30px;
+        justify-content: left;
+    }
+
+    .logo-wrapper{
+        display: none;
+    }
+
+    .nav-menu {
+        gap: 24px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 120px;
+        height: 36px;
+    }
+}
+
+@media (max-width:500px) {
+    .header-right{
+        gap: 5px;
+    }
+    .nav-menu{
+        padding: 0;
+        gap: 10px;
+    }
+    .nav-item{
+        padding: 0 0 10px 0;
+    }
+    .nav-link{
+        white-space: nowrap;
+    }
+    .user-menu{
+        padding: 0;
+    }
+}
+
+/* 內容區域（示範用） */
+.content {
+    margin-top: 60px;
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-card {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.content-card h1 {
+    color: #333;
+    margin-bottom: 16px;
+    font-size: 24px;
+}
+
+.content-card p {
+    color: #666;
+    line-height: 1.6;
+}
