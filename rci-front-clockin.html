@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="disable">
+<head>
+    <meta charset="utf-8" />
+    <title>線上打卡 | 會員專區</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="assets/js/layout.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="assets/css/rci-header.css" rel="stylesheet" />
+
+    <link href="assets/css/rci-front-clockin.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="layout-wrapper">
+        <div id="header-placeholder"></div>
+
+        <div class="vertical-overlay"></div>
+
+        <div class="main-content">
+          <div class="page-content">
+              <div class="container-fluid">
+                  
+                  <div class="row mb-3 align-items-center">
+                      <div class="col-12">
+                          <h4 class="fs-20 mb-0 fw-bold">考勤管理</h4>
+                      </div>
+                  </div>
+      
+                  <div class="row justify-content-center">
+                      <div class="col-xl-5 col-lg-6 col-md-8 col-12">
+                          
+                          <ul class="nav nav-pills nav-justified bg-light p-1 rounded-pill mb-4 shadow-sm" role="tablist">
+                              <li class="nav-item waves-effect waves-light">
+                                  <a class="nav-link active rounded-pill fw-medium" data-bs-toggle="tab" href="#clock-tab" role="tab">
+                                      <i class="ri-fingerprint-line align-middle me-1"></i> 線上打卡
+                                  </a>
+                              </li>
+                              <li class="nav-item waves-effect waves-light">
+                                  <a class="nav-link rounded-pill fw-medium" data-bs-toggle="tab" href="#history-tab" role="tab">
+                                      <i class="ri-file-list-3-line align-middle me-1"></i> 打卡歷程
+                                  </a>
+                              </li>
+                          </ul>
+      
+                          <div class="tab-content text-muted">
+                              
+                              <div class="tab-pane active" id="clock-tab" role="tabpanel">
+                                  <div class="card attendance-card shadow-sm border-0 rounded-4 mt-3">
+                                      <div class="card-body p-4 text-center">
+                                          <div class="mb-4 mt-2">
+                                              <div class="avatar-lg mx-auto">
+                                                  <div class="avatar-title bg-primary-subtle text-primary rounded-circle fs-36">
+                                                      <i class="ri-time-line"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="time-display-wrapper mb-5">
+                                              <h5 id="current-date" class="text-muted fs-15 mb-2">載入日期中...</h5>
+                                              <h1 id="current-time" class="display-3 fw-bold text-dark mb-0 clock-text">00:00:00</h1>
+                                              <p class="text-success mt-2 mb-0 fw-medium" id="status-text">準備就緒，請打卡</p>
+                                          </div>
+                                          <div class="d-flex flex-column gap-3">
+                                              <button type="button" class="btn btn-primary btn-lg rounded-pill py-3 fw-bold fs-16 shadow-sm action-btn" id="btn-clock-in">
+                                                  <i class="ri-map-pin-time-line align-middle me-1"></i> 上班打卡
+                                              </button>
+                                              <button type="button" class="btn btn-soft-danger btn-lg rounded-pill py-3 fw-bold fs-16 shadow-sm action-btn" id="btn-clock-out">
+                                                  <i class="ri-logout-box-r-line align-middle me-1"></i> 下班打卡
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+      
+                              <div class="tab-pane" id="history-tab" role="tabpanel">
+                                  <div class="card border-0 shadow-sm rounded-4">
+                                      <div class="card-header bg-white border-bottom-dashed d-flex justify-content-between align-items-center py-3 rounded-top-4">
+                                          <button class="btn btn-sm btn-soft-primary rounded-circle shadow-none" id="btn-prev-month">
+                                              <i class="ri-arrow-left-s-line fs-18"></i>
+                                          </button>
+                                          <h5 class="mb-0 fw-bold fs-16" id="history-month-display">2026年 03月</h5>
+                                          <button class="btn btn-sm btn-soft-primary rounded-circle shadow-none" id="btn-next-month">
+                                              <i class="ri-arrow-right-s-line fs-18"></i>
+                                          </button>
+                                      </div>
+                                      <div class="card-body p-0">
+                                          <div class="list-group list-group-flush" id="history-list-container">
+                                              <div class="text-center py-5">
+                                                  <div class="spinner-border text-primary" role="status"></div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+      
+                          </div> </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="assets/js/importFile/header-loader.js"></script>
+
+    <script src="assets/js/pages/rci-front-clockin.js"></script>
+</body>
+</html>
