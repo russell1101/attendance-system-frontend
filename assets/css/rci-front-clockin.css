@@ -1,0 +1,32 @@
+/* 打卡卡片背景優化 */
+.attendance-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    padding-bottom: 10px;
+}
+
+/* 時鐘字體優化，使用等寬數字避免跳動 */
+.clock-text {
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    /* 確保在超小螢幕上字體不會爆掉 */
+    font-size: clamp(2.5rem, 10vw, 4rem); 
+}
+
+/* 按鈕按壓效果 */
+.action-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.action-btn:active {
+    transform: scale(0.96);
+}
+
+/* 確保手機端高度足夠好點擊 */
+@media (max-width: 576px) {
+    .action-btn {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+}

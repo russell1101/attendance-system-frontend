@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="disable">
+<head>
+    <meta charset="utf-8" />
+    <title>個人資訊 | 會員專區</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <link
+    href="assets/libs/sweetalert2/sweetalert2.min.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+    <script src="assets/js/layout.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="assets/css/rci-header.css" rel="stylesheet" />
+    <link href="assets/css/rci-front-profile.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="layout-wrapper">
+        <div id="header-placeholder"></div>
+        <div class="vertical-overlay"></div>
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="fs-20 mb-0 fw-bold">個人資訊</h4>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-xl-4 col-lg-5 col-md-6 col-12">
+                            <div class="card profile-card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="profile-bg-cover"></div>
+                                <div class="card-body p-4 text-center pb-0">
+                                    <div class="profile-user-img">
+                                        <img src="assets/images/users/avatar-1.jpg" alt="user-img" class="avatar-xl rounded-circle img-thumbnail shadow-sm">
+                                    </div>
+                                    <h5 class="fs-18 fw-bold mt-3 mb-1" id="profile-name">載入中...</h5>
+                                    <p class="text-muted fs-14 mb-3" id="profile-dept">載入中...</p>
+                                    
+                                    <div class="d-flex justify-content-center gap-2 mb-4">
+                                        <span class="badge bg-success-subtle text-success fs-13 px-3 py-2 rounded-pill" id="profile-status">在職</span>
+                                        <span class="badge bg-warning-subtle text-warning fs-13 px-3 py-2 rounded-pill">
+                                            <i class="ri-coin-fill align-middle me-1"></i> <span id="profile-points">0</span> 點
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="card-body border-top border-light border-opacity-50 p-4">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex pb-3 border-bottom border-light border-opacity-50 mb-3">
+                                            <div class="flex-shrink-0 avatar-xs">
+                                                <div class="avatar-title bg-light text-primary rounded-circle fs-16">
+                                                    <i class="ri-mail-line"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fs-13 mb-1 text-muted">Email</h6>
+                                                <p class="mb-0 fw-medium text-dark" id="profile-email">-</p>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex pb-3 border-bottom border-light border-opacity-50 mb-3">
+                                            <div class="flex-shrink-0 avatar-xs">
+                                                <div class="avatar-title bg-light text-success rounded-circle fs-16">
+                                                    <i class="ri-calendar-event-line"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fs-13 mb-1 text-muted">到職日期</h6>
+                                                <p class="mb-0 fw-medium text-dark" id="profile-hiredate">-</p>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex pb-3">
+                                            <div class="flex-shrink-0 avatar-xs">
+                                                <div class="avatar-title bg-light text-info rounded-circle fs-16">
+                                                    <i class="ri-fingerprint-line"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="fs-13 mb-1 text-muted">員工編號</h6>
+                                                <p class="mb-0 fw-medium text-dark" id="profile-id">-</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="assets/js/app.js"></script>
+
+    <!-- Header loader -->
+    <script src="assets/js/importFile/header-loader.js"></script>
+    <script src="assets/js/pages/rci-front-profile.js"></script>
+</body>
+</html>
