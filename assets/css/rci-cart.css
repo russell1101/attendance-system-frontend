@@ -1,3 +1,26 @@
-.dropdown-toggle::after{
-    display: none;
+/* 頁籤切換樣式覆蓋 (使其更貼近 Velzon 風格) */
+.categories-filter .nav-link {
+    color: #495057;
+    font-weight: 500;
+    border-radius: 30px;
+    padding: 8px 20px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.categories-filter .nav-link:hover {
+    background-color: #f3f6f9;
+}
+
+.categories-filter .nav-link.active {
+    background-color: #0ab39c; /* Velzon 綠色 */
+    color: #fff;
+    border-color: #0ab39c;
+    box-shadow: 0 4px 6px rgba(10, 179, 156, 0.2);
+}
+
+/* 確保隱藏編輯卡片時使用 d-none 是最高權重 */
+#productEdit.d-none {
+    display: none !important;
 }
