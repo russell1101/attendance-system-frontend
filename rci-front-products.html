@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-layout="vertical"
+  data-topbar="light"
+  data-sidebar="dark"
+  data-sidebar-size="sm-hover"
+  data-sidebar-image="none"
+  data-preloader="disable"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title>紅利兌換中心 | 會員專區</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <link
+      href="assets/libs/sweetalert2/sweetalert2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <script src="assets/js/layout.js"></script>
+    <link
+      href="assets/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Header CSS -->
+    <link href="assets/css/rci-header.css" rel="stylesheet" />
+
+    <link
+      href="assets/css/rci-front-products.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <div id="header-placeholder"></div>
+
+      <!-- removeNotificationModal -->
+      <div
+        id="removeNotificationModal"
+        class="modal fade zoomIn"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="NotificationModalbtn-close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mt-2 text-center">
+                <lord-icon
+                  src="https://cdn.lordicon.com/gsqxdxog.json"
+                  trigger="loop"
+                  colors="primary:#f7b84b,secondary:#f06548"
+                  style="width: 100px; height: 100px"
+                ></lord-icon>
+                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                  <h4>Are you sure ?</h4>
+                  <p class="text-muted mx-4 mb-0">
+                    Are you sure you want to remove this Notification ?
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                <button
+                  type="button"
+                  class="btn w-sm btn-light"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn w-sm btn-danger"
+                  id="delete-notification"
+                >
+                  Yes, Delete It!
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- Vertical Overlay-->
+      <div class="vertical-overlay"></div>
+      <div class="main-content">
+        <div class="page-content">
+          <div class="container-fluid">
+            <div class="row mb-4 align-items-center">
+              <div class="col-7">
+                <h4 class="fs-20 mb-0 fw-bold">紅利兌換商城</h4>
+                <p class="text-muted mb-0 fs-12">精選好禮，專屬於您</p>
+              </div>
+              <div class="col-5 text-end">
+                <div
+                  class="user-points-badge p-2 rounded-pill bg-soft-warning border border-warning"
+                >
+                  <span class="text-warning fw-bold fs-14">
+                    <i class="ri-coin-fill align-middle me-1"></i>
+                    <span id="user-points-display">Loading...</span> 點
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="search-box">
+                  <input
+                    type="text"
+                    class="form-control bg-light border-0"
+                    placeholder="搜尋兌換券..."
+                  />
+                  <i class="ri-search-line search-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="voucher-list-container">
+              <div class="col-12 text-center mt-5">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6">
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                © Velzon.
+              </div>
+            </div>
+          </div>
+        </footer> -->
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="productDetailModal"
+      tabindex="-1"
+      aria-labelledby="productDetailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body pt-0">
+            <div class="text-center mb-4">
+              <img
+                id="modal-img"
+                src=""
+                alt=""
+                class="img-fluid rounded shadow-sm"
+                style="max-height: 250px; object-fit: cover"
+              />
+            </div>
+            <h4 class="fw-bold mb-2" id="modal-title">商品名稱</h4>
+            <div id="modal-expiry" class="mb-3"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span
+                class="badge bg-warning-subtle text-warning fs-14 px-3 py-2 rounded-pill"
+              >
+                <i class="ri-coin-fill align-middle me-1"></i>
+                <span id="modal-points">0</span> 點
+              </span>
+              <span class="text-muted fs-13"
+                >庫存: <span id="modal-stock">0</span></span
+              >
+            </div>
+
+            <div class="border-top border-bottom py-3 my-3">
+              <h6 class="fs-14 fw-semibold">商品介紹</h6>
+              <p class="text-muted fs-13 mb-0" id="modal-desc">
+                商品詳細描述...
+              </p>
+            </div>
+
+            <div class="border-top border-bottom py-3 my-3">
+              <h6 class="fs-14 fw-semibold">使用須知</h6>
+              <ul class="text-muted fs-13 ps-3 mb-0">
+                <li>本券售出後不接受退款。</li>
+                <li>請於兌換期限內使用完畢。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <div class="row w-100 g-2">
+              <div class="col-5">
+                <div class="input-step full-width">
+                  <button type="button" class="minus modal-qty-btn">–</button>
+                  <input
+                    type="number"
+                    class="product-quantity"
+                    id="modal-qty-input"
+                    value="1"
+                    min="1"
+                    max="100"
+                    readonly
+                  />
+                  <button type="button" class="plus modal-qty-btn">+</button>
+                </div>
+              </div>
+              <div class="col-7">
+                <button
+                  type="button"
+                  class="btn btn-primary w-100"
+                  id="modal-redeem-btn"
+                >
+                  立即兌換
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="assets/js/app.js"></script>
+
+    <!-- Header loader -->
+    <script src="assets/js/importFile/header-loader.js"></script>
+
+    <script src="assets/js/pages/rci-front-products.js"></script>
+  </body>
+</html>

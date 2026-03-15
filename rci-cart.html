@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-layout="vertical"
+  data-topbar="light"
+  data-sidebar="dark"
+  data-sidebar-size="sm-hover"
+  data-sidebar-image="none"
+  data-preloader="disable"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title>Products | Velzon - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      content="Premium Multipurpose Admin & Dashboard Template"
+      name="description"
+    />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <!-- nouisliderribute css -->
+    <link rel="stylesheet" href="assets/libs/nouislider/nouislider.min.css" />
+
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="assets/libs/gridjs/theme/mermaid.min.css" />
+
+    <!-- SweetAlert2 css -->
+    <link
+      href="assets/libs/sweetalert2/sweetalert2.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Layout config Js -->
+    <script src="assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link
+      href="assets/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- NavBar CSS -->
+    <link href="assets/css/rci-navBar.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/rci-cart.css" />
+  </head>
+
+  <body>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <!-- NavBar 容器 -->
+      <div id="navBar-placeholder"></div>
+
+      <!-- removeNotificationModal -->
+      <div
+        id="removeNotificationModal"
+        class="modal fade zoomIn"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="NotificationModalbtn-close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mt-2 text-center">
+                <lord-icon
+                  src="https://cdn.lordicon.com/gsqxdxog.json"
+                  trigger="loop"
+                  colors="primary:#f7b84b,secondary:#f06548"
+                  style="width: 100px; height: 100px"
+                ></lord-icon>
+                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                  <h4>Are you sure ?</h4>
+                  <p class="text-muted mx-4 mb-0">
+                    Are you sure you want to remove this Notification ?
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                <button
+                  type="button"
+                  class="btn w-sm btn-light"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn w-sm btn-danger"
+                  id="delete-notification"
+                >
+                  Yes, Delete It!
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <!-- Vertical Overlay-->
+      <div class="vertical-overlay"></div>
+
+      <!-- ============================================================== -->
+      <!-- Start right Content here -->
+      <!-- ============================================================== -->
+      <div class="main-content">
+        <div class="page-content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div
+                  class="page-title-box d-sm-flex align-items-center justify-content-between"
+                >
+                  <h4 class="mb-sm-0 display-6 fw-bold">紅利/商品管理</h4>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="text-center">
+                  <ul
+                    class="nav nav-pills list-inline categories-filter animation-nav d-inline-flex"
+                    id="admin-tabs"
+                    role="tablist"
+                  >
+                    <li class="list-inline-item nav-item">
+                      <a
+                        class="nav-link categories active"
+                        data-bs-toggle="tab"
+                        href="#tab-product"
+                        role="tab"
+                        >商品管理</a
+                      >
+                    </li>
+                    <li class="list-inline-item nav-item">
+                      <a
+                        class="nav-link categories"
+                        data-bs-toggle="tab"
+                        href="#tab-history"
+                        role="tab"
+                        >兌換紀錄</a
+                      >
+                    </li>
+                    <li class="list-inline-item nav-item">
+                      <a
+                        class="nav-link categories"
+                        data-bs-toggle="tab"
+                        href="#tab-setting"
+                        role="tab"
+                        >紅利設定</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content text-muted">
+              <div
+                class="tab-pane active show"
+                id="tab-product"
+                role="tabpanel"
+              >
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card" id="productList">
+                      <div class="card-header bg-light border-0">
+                        <div class="row g-2">
+                          <div class="col-xl-3 col-md-4">
+                            <div class="search-box">
+                              <input
+                                type="text"
+                                class="form-control search"
+                                placeholder="搜尋商品..."
+                              />
+                              <i class="ri-search-line search-icon"></i>
+                            </div>
+                          </div>
+                          <div class="col-auto ms-auto">
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              id="btn-add-product"
+                            >
+                              <i class="ri-add-line align-bottom me-1"></i>
+                              新增商品
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive table-card mb-1">
+                          <table
+                            class="table align-middle table-nowrap"
+                            id="productTable"
+                          >
+                            <thead class="table-dark text-center">
+                              <tr>
+                                <th style="width: 80px">編號</th>
+                                <th>商品</th>
+                                <th>點數</th>
+                                <th>庫存</th>
+                                <th>狀態</th>
+                                <th style="width: 80px">操作</th>
+                              </tr>
+                            </thead>
+                            <tbody
+                              class="list form-check-all text-center"
+                            ></tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card d-none" id="productEdit">
+                      <div class="card-header">
+                        <h4 class="card-title mb-0">編輯商品</h4>
+                      </div>
+                      <div class="card-body">
+                        <form id="editProductForm">
+                          <div class="text-end mt-3">
+                            <button
+                              type="button"
+                              class="btn btn-light"
+                              id="btn-back"
+                            >
+                              返回
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                              儲存編輯
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="tab-history" role="tabpanel">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header bg-light border-0">
+                        <div class="row g-2 align-items-center">
+                          <div class="col-xl-3 col-md-4">
+                            <div class="search-box">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="searchHistory"
+                                placeholder="搜尋員工姓名或禮券序號..."
+                              />
+                              <i class="ri-search-line search-icon"></i>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 col-md-3">
+                            <select class="form-select" id="filterStatus">
+                              <option value="ALL">所有狀態</option>
+                              <option value="AVAILABLE">
+                                未使用 (Available)
+                              </option>
+                              <option value="USED">已使用 (Used)</option>
+                              <option value="EXPIRED">已過期 (Expired)</option>
+                            </select>
+                          </div>
+                          <div class="col-auto ms-auto">
+                            <button
+                              type="button"
+                              class="btn btn-soft-info"
+                              onclick="AlertUtil.success('匯出報表功能開發中')"
+                            >
+                              <i
+                                class="ri-file-download-line align-bottom me-1"
+                              ></i>
+                              匯出報表
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive table-card mb-1">
+                          <table
+                            class="table align-middle table-nowrap"
+                            id="historyTable"
+                          >
+                            <thead class="table-light text-center">
+                              <tr>
+                                <th>兌換時間</th>
+                                <th>禮券序號</th>
+                                <th>員工姓名</th>
+                                <th>禮券名稱</th>
+                                <th>扣除點數</th>
+                                <th>狀態</th>
+                                <th>使用時間</th>
+                              </tr>
+                            </thead>
+                            <tbody
+                              class="text-center"
+                              id="historyTableBody"
+                            ></tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="tab-setting" role="tabpanel">
+                <div class="row justify-content-center">
+                  <div class="col-xl-6 col-lg-8">
+                    <div class="card shadow-sm border-0">
+                      <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">
+                          <i class="ri-settings-4-line text-primary me-1"></i>
+                          考勤紅利點數規則設定
+                        </h4>
+                      </div>
+                      <div class="card-body">
+                        <form id="pointSettingsForm">
+                          <div class="row gy-4">
+                            <div class="col-12">
+                              <div
+                                class="alert alert-info border-0 shadow-none mb-0"
+                              >
+                                設定員工每日出勤狀態對應的紅利點數增減。正數為獎勵，負數為扣除。
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label text-success fw-bold"
+                                ><i class="ri-checkbox-circle-line me-1"></i
+                                >準時上班 (ON_TIME)</label
+                              >
+                              <div class="input-group">
+                                <span
+                                  class="input-group-text bg-success-subtle text-success border-success-subtle"
+                                  >+</span
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="set-on-time"
+                                  value="10"
+                                  min="0"
+                                />
+                                <span class="input-group-text">點</span>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label text-danger fw-bold"
+                                ><i class="ri-timer-2-line me-1"></i>遲到
+                                (LATE)</label
+                              >
+                              <div class="input-group">
+                                <span
+                                  class="input-group-text bg-danger-subtle text-danger border-danger-subtle"
+                                  >-</span
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="set-late"
+                                  value="5"
+                                  min="0"
+                                />
+                                <span class="input-group-text">點</span>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label text-warning fw-bold"
+                                ><i class="ri-run-line me-1"></i>早退
+                                (EARLY_LEAVE)</label
+                              >
+                              <div class="input-group">
+                                <span
+                                  class="input-group-text bg-warning-subtle text-warning border-warning-subtle"
+                                  >-</span
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="set-early"
+                                  value="10"
+                                  min="0"
+                                />
+                                <span class="input-group-text">點</span>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label text-secondary fw-bold"
+                                ><i class="ri-error-warning-line me-1"></i
+                                >缺卡/曠職 (MISSING)</label
+                              >
+                              <div class="input-group">
+                                <span
+                                  class="input-group-text bg-secondary-subtle text-secondary border-secondary-subtle"
+                                  >-</span
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="set-missing"
+                                  value="50"
+                                  min="0"
+                                />
+                                <span class="input-group-text">點</span>
+                              </div>
+                            </div>
+
+                            <div class="col-12 mt-4 text-end">
+                              <button
+                                type="submit"
+                                class="btn btn-primary px-4"
+                              >
+                                <i class="ri-save-3-line align-middle me-1"></i>
+                                儲存設定
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6">
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                © Velzon.
+              </div>
+              <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                  Design & Develop by Themesbrand
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer> -->
+      </div>
+      <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- removeItemModal -->
+    <div
+      id="removeItemModal"
+      class="modal fade zoomIn"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              id="btn-close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mt-2 text-center">
+              <lord-icon
+                src="https://cdn.lordicon.com/gsqxdxog.json"
+                trigger="loop"
+                colors="primary:#f7b84b,secondary:#f06548"
+                style="width: 100px; height: 100px"
+              ></lord-icon>
+              <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                <h4>Are you Sure ?</h4>
+                <p class="text-muted mx-4 mb-0">
+                  Are you Sure You want to Remove this Product ?
+                </p>
+              </div>
+            </div>
+            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+              <button
+                type="button"
+                class="btn w-sm btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn w-sm btn-danger"
+                id="delete-product"
+              >
+                Yes, Delete It!
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!--start back-to-top-->
+    <button
+      onclick="topFunction()"
+      class="btn btn-danger btn-icon"
+      id="back-to-top"
+    >
+      <i class="ri-arrow-up-line"></i>
+    </button>
+    <!--end back-to-top-->
+
+    <!--preloader-->
+    <div id="preloader">
+      <div id="status">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="customizer-setting d-none d-md-block">
+        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
+        </div>
+    </div> -->
+
+    <!-- JAVASCRIPT -->
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- nouisliderribute js -->
+    <script src="assets/libs/nouislider/nouislider.min.js"></script>
+    <script src="assets/libs/wnumb/wNumb.min.js"></script>
+
+    <!-- gridjs js -->
+    <script src="assets/libs/gridjs/gridjs.umd.js"></script>
+    <script src="https://unpkg.com/gridjs/plugins/selection/dist/selection.umd.js"></script>
+
+    <!-- SweetAlert2 js -->
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- ecommerce product list -->
+    <script src="assets/js/pages/ecommerce-product-list.init.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+    <!-- NavBar loader -->
+    <script src="assets/js/importFile/navBar-loader.js"></script>
+
+    <script src="assets/js/pages/rci-cart.js"></script>
+  </body>
+</html>
