@@ -1,0 +1,393 @@
+/* rci-attendance.css - 出勤管理圖表樣式 */
+
+/* === 覆蓋原有框架樣式 === */
+.main-content {
+    margin: 10px !important;
+}
+
+.page-content {
+    padding: 0 !important;
+}
+.container-fluid{
+    padding: 0 !important;
+    position: relative;
+}
+
+/* === 頁面標題區 === */
+.chartPage-header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 16px 20px;
+    background: #f1f1f1;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0 0 16px 0;
+}
+
+/* === 篩選區域 === */
+.filter-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: #00b8d9;
+    color: #00b8d9;
+}
+
+.filter-btn.active {
+    background: #00b8d9;
+    border-color: #00b8d9;
+    color: #fff;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filter-date {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.filter-search-btn {
+    padding: 8px 24px;
+    background: #00b8d9;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.filter-search-btn:hover {
+    background: #0097b8;
+}
+
+.filter-download-btn {
+    padding: 8px 24px;
+    background: #00b8d9;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background 0.2s;
+}
+
+.filter-download-btn:hover {
+    background: #0097b8;
+}
+
+
+/* === 圖表容器 Grid === */
+.charts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(100vh - 181px);
+    gap: 10px;
+    overflow: auto;
+}
+
+/* === 單一圖表卡片 === */
+.chart-card {
+    width: calc(100% / 2 - 10px);
+    height: calc(100% / 2 - 10px);
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+}
+
+.chart-body {
+    display: flex;
+    height: calc(100% - 52px);
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.chart-card:nth-child(4)>.chart-body{
+    height: calc(100% - 122px);
+    padding: 0 20px;
+}
+
+/* === ECharts 容器 - RWD 關鍵 === */
+.echart-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* === 統計摘要區 === */
+.stats-summary {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap;
+    height: 70px;
+}
+.echart-scatter{
+    width: 100%;
+    height: 100%;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.stat-value.highlight {
+    color: #00b8d9;
+}
+
+.stat-value.warning {
+    color: #ffc107;
+}
+
+.stat-value.danger {
+    color: #dc3545;
+}
+
+/* === RWD 響應式設計 === */
+
+/* 平板 (768px - 1199px) */
+@media (max-width: 1199px) {
+    .charts-grid {
+        gap: 20px;
+    }
+    .stats-summary{
+        padding: 10px;
+    }
+    
+}
+
+/* 大平板/小電腦 (992px 以下) */
+@media (max-width: 991px) {
+
+}
+
+/* 手機 (767px 以下) */
+@media (max-width: 767px) {
+    .page-header {
+        margin-left: 50px;
+    }
+    .page-title {
+        font-size: 20px;
+    }
+    
+    .filter-section {
+        padding: 12px 16px;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .filter-btn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+    
+    .filter-select,
+    .filter-date {
+        width: 100%;
+    }
+    
+    .filter-search-btn {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .charts-grid {
+        gap: 16px;
+        overflow: unset;
+        height: auto;
+    }
+    
+    .chart-header {
+        padding: 12px 16px;
+    }
+    
+    .chart-title {
+        font-size: 14px;
+    }
+    
+    .chart-body {
+        padding: 12px;
+    }
+
+    .chart-card{
+        width: 100%;
+        height: 400px;
+    }
+    
+    .stats-summary {
+        padding: 12px 16px;
+        gap: 16px;
+    }
+    
+    .stat-item {
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .stat-value {
+        font-size: 16px;
+    }
+}
+
+/* 小手機 (480px 以下) */
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 18px;
+    }
+    
+    .filter-group {
+        flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+        font-size: 12px;
+        padding: 8px 6px;
+    }
+    
+    
+    .stats-summary {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+    
+    .stat-label {
+        margin-bottom: 0;
+    }
+}
+
+/* === 圖表載入狀態 === */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6c757d;
+}
+
+.chart-loading::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 3px solid #eee;
+    border-top-color: #00b8d9;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === 無資料狀態 === */
+.chart-no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6c757d;
+}
+
+.chart-no-data i {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.chart-no-data span {
+    font-size: 14px;
+}
