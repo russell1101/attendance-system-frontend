@@ -45,8 +45,12 @@ body {
     width: 140px;
 }
 
+.logo-wrapper a {
+    width: 100%;
+    height: 100%;
+}
 
-.logo-wrapper img {
+.logo-wrapper a img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -73,39 +77,39 @@ body {
     margin-bottom: 0;
 }
 
-/* 基礎樣式調整 */
+/* Nav item：用 CSS 自訂屬性統一控制狀態 */
 .nav-item {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* 確保圖示與文字垂直對齊 */
     cursor: pointer;
     padding: 10px;
+
+    --icon-filter: none;
+    --link-color: #333333;
 }
 
-/* 預設文字顏色 */
-.nav-link {
-    color: #333333;
+.nav-item.active,
+.nav-item:hover,
+.nav-item:active,
+.nav-item:focus-within {
+    --icon-filter: invert(41%) sepia(60%) saturate(1663%) hue-rotate(190deg) brightness(99%) contrast(104%);
+    --link-color: #1890ff;
+}
+
+/* 拿掉 transition，避免跳頁閃爍 */
+.nav-item img {
+    filter: var(--icon-filter);
+}
+
+/* 加高優先權，贏過 Bootstrap 的 a 預設樣式 */
+.nav-menu .nav-item .nav-link {
+    color: var(--link-color);
     text-decoration: none;
-    transition: color 0.2s ease;
 }
 
-/* --- 同步變色邏輯 --- */
-
-/* 當 active 或 hover 時，文字變藍 */
-.nav-item.active .nav-link,
-.nav-item:hover .nav-link {
-    color: #1890ff;
-}
-
-/* 當 active 或 hover 時，圖片變藍 */
-.nav-item.active img,
-.nav-item:hover img {
-    filter: invert(41%) sepia(60%) saturate(1663%) hue-rotate(190deg) brightness(99%) contrast(104%);
-}
-
-/* 底部藍條 (僅在 active 狀態顯示) */
+/* 底部藍條（僅 active 顯示） */
 .nav-item.active::after {
     content: "";
     position: absolute;
@@ -181,9 +185,17 @@ body {
     overflow: hidden;
 }
 
+.user-avatar a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .user-avatar svg {
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     stroke: #999;
     fill: none;
     stroke-width: 1.5;
@@ -200,7 +212,7 @@ body {
         justify-content: left;
     }
 
-    .logo-wrapper{
+    .logo-wrapper {
         display: none;
     }
 
@@ -218,21 +230,25 @@ body {
     }
 }
 
-@media (max-width:500px) {
-    .header-right{
+@media (max-width: 500px) {
+    .header-right {
         gap: 5px;
     }
-    .nav-menu{
+
+    .nav-menu {
         padding: 0;
         gap: 10px;
     }
-    .nav-item{
+
+    .nav-item {
         padding: 0 0 10px 0;
     }
-    .nav-link{
+
+    .nav-link {
         white-space: nowrap;
     }
-    .user-menu{
+
+    .user-menu {
         padding: 0;
     }
 }
