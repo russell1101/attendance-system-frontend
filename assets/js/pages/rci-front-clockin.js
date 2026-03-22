@@ -33,18 +33,66 @@ document.addEventListener("DOMContentLoaded", function () {
   // 設定每秒 (1000ms) 更新一次
   setInterval(updateClock, 1000);
 
-  // 3. API 呼叫模擬區塊
-  const callAttendanceApi = async (type) => {
-    // type: "IN" (上班) 或 "OUT" (下班)
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // 模擬 API 呼叫成功
-        resolve({ success: 1, message: "打卡紀錄已儲存" });
-      }, 800);
-    });
+  // ==========================================
+  // 🔥 3. 頁面初始化：取得當日打卡狀態並 Disable 按鈕
+  // ==========================================
+  const loadClockStatus = async () => {
+    try {
+      const response = await fetch(
+        `${APP_CONFIG.API_BASE_URL}/frontUser/clock/status`
+      );
+      const result = await response.json();
+
+      // 如果 API 回傳錯誤
+      if (result.success !== 1) {
+        Swal.fire({
+          icon: "error",
+          title: "狀態讀取失敗",
+          text: result.errMsg || "系統發生錯誤",
+          confirmButtonClass: "btn btn-primary w-xs mt-2",
+          buttonsStyling: false,
+        }).then(() => {
+          // 判斷是否為未登入狀態 (-999)
+          if (result.success === -999) {
+            window.location.href = "./rci-login-front.html";
+          } else {
+            window.location.reload();
+          }
+        });
+        return; // 終止後續執行
+      }
+
+      // API 成功，處理按鈕狀態
+      const data = result.data;
+      if (data.hasClockedIn) {
+        btnClockIn.disabled = true;
+        btnClockIn.classList.replace("btn-primary", "btn-secondary"); // 變更顏色
+        btnClockIn.innerHTML = `<i class="ri-map-pin-time-line align-middle me-1"></i> 已上班 (${data.clockInTime})`;
+
+        statusText.textContent = `最新紀錄：上班 (${data.clockInTime})`;
+        statusText.className = "text-primary mt-2 mb-0 fw-medium";
+      }
+
+      if (data.hasClockedOut) {
+        btnClockOut.disabled = true;
+        btnClockOut.classList.replace("btn-soft-danger", "btn-secondary"); // 變更顏色
+        btnClockOut.innerHTML = `<i class="ri-logout-box-r-line align-middle me-1"></i> 已下班 (${data.clockOutTime})`;
+
+        statusText.textContent = `最新紀錄：下班 (${data.clockOutTime})`;
+        statusText.className = "text-danger mt-2 mb-0 fw-medium";
+      }
+    } catch (error) {
+      console.error("狀態 API 呼叫異常:", error);
+    }
   };
 
-  // 4. 按鈕點擊邏輯
+  // 執行載入狀態
+  loadClockStatus();
+
+  // ==========================================
+  // 🔥 4. 按鈕點擊邏輯 (真實串接 API)
+  // ==========================================
+
   // 上班打卡
   if (btnClockIn) {
     btnClockIn.addEventListener("click", () => {
@@ -61,25 +109,56 @@ document.addEventListener("DOMContentLoaded", function () {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
           try {
-            const res = await callAttendanceApi("IN");
-            if (res.success !== 1) throw new Error("打卡失敗");
-            return res;
+            // 直接回傳 fetch 的 JSON 結果交給 then 處理
+            const response = await fetch(
+              `${APP_CONFIG.API_BASE_URL}/frontUser/clock/clockin`,
+              { method: "POST" }
+            );
+            return await response.json();
           } catch (error) {
-            Swal.showValidationMessage(`發生錯誤: ${error.message}`);
+            // 網路錯誤時回傳自訂錯誤物件
+            return { success: -1, errMsg: "網路連線異常，請檢查網路狀態" };
           }
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "上班打卡成功!",
-            text: `您已於 ${timeDisplay.textContent} 完成上班打卡。`,
-            icon: "success",
-            confirmButtonClass: "btn btn-primary w-xs mt-2",
-            buttonsStyling: false,
-          });
-          statusText.textContent = `最新紀錄：上班 (${timeDisplay.textContent})`;
-          statusText.className = "text-primary mt-2 mb-0 fw-medium";
+          const res = result.value;
+
+          // 判斷 API 執行結果
+          if (res.success !== 1) {
+            // 失敗處理
+            Swal.fire({
+              icon: "error",
+              title: "打卡失敗",
+              text: res.errMsg || "發生未知錯誤",
+              confirmButtonClass: "btn btn-primary w-xs mt-2",
+              buttonsStyling: false,
+            }).then(() => {
+              if (res.success === -999)
+                window.location.href = "./rci-login-front.html";
+              else window.location.reload();
+            });
+          } else {
+            // 成功處理，可以把加扣點資訊組裝進去
+            let successMsg = `您已於 <b>${timeDisplay.textContent}</b> 完成上班打卡。`;
+            if (res.data) {
+              successMsg += `<br><br>打卡狀態：<span class="text-primary fw-bold">${res.data.status}</span>`;
+              successMsg += `<br>點數異動：<span class="${
+                res.data.pointsChanged < 0 ? "text-danger" : "text-success"
+              } fw-bold">${res.data.pointsChanged} 點</span>`;
+            }
+
+            Swal.fire({
+              title: "上班打卡成功!",
+              html: successMsg,
+              icon: "success",
+              confirmButtonClass: "btn btn-primary w-xs mt-2",
+              buttonsStyling: false,
+            }).then(() => {
+              window.location.reload(); // 重整頁面讓按鈕進入 Disable 狀態
+            });
+          }
         }
       });
     });
@@ -91,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
       Swal.fire({
         title: "確認下班打卡？",
         text: "系統將記錄您現在的時間為下班時間。",
-        icon: "warning", // 用黃色警告圖示稍微區分
+        icon: "warning",
         showCancelButton: true,
         confirmButtonText: "確認下班",
         cancelButtonText: "取消",
@@ -101,41 +180,69 @@ document.addEventListener("DOMContentLoaded", function () {
         showLoaderOnConfirm: true,
         preConfirm: async () => {
           try {
-            const res = await callAttendanceApi("OUT");
-            if (res.success !== 1) throw new Error("打卡失敗");
-            return res;
+            const response = await fetch(
+              `${APP_CONFIG.API_BASE_URL}/frontUser/clock/clockout`,
+              { method: "POST" }
+            );
+            return await response.json();
           } catch (error) {
-            Swal.showValidationMessage(`發生錯誤: ${error.message}`);
+            return { success: -1, errMsg: "網路連線異常，請檢查網路狀態" };
           }
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "下班打卡成功!",
-            text: `您已於 ${timeDisplay.textContent} 完成下班打卡`,
-            icon: "success",
-            confirmButtonClass: "btn btn-primary w-xs mt-2",
-            buttonsStyling: false,
-          });
-          statusText.textContent = `最新紀錄：下班 (${timeDisplay.textContent})`;
-          statusText.className = "text-danger mt-2 mb-0 fw-medium";
+          const res = result.value;
+
+          // 判斷 API 執行結果
+          if (res.success !== 1) {
+            // 失敗處理
+            Swal.fire({
+              icon: "error",
+              title: "打卡失敗",
+              text: res.errMsg || "發生未知錯誤",
+              confirmButtonClass: "btn btn-primary w-xs mt-2",
+              buttonsStyling: false,
+            }).then(() => {
+              if (res.success === -999)
+                window.location.href = "./rci-login-front.html";
+              else window.location.reload();
+            });
+          } else {
+            // 成功處理
+            let successMsg = `您已於 <b>${timeDisplay.textContent}</b> 完成下班打卡。辛苦了！`;
+            if (res.data) {
+              successMsg += `<br><br>打卡狀態：<span class="text-primary fw-bold">${res.data.status}</span>`;
+              successMsg += `<br>點數異動：<span class="${
+                res.data.pointsChanged < 0 ? "text-danger" : "text-success"
+              } fw-bold">${res.data.pointsChanged} 點</span>`;
+            }
+
+            Swal.fire({
+              title: "下班打卡成功!",
+              html: successMsg,
+              icon: "success",
+              confirmButtonClass: "btn btn-primary w-xs mt-2",
+              buttonsStyling: false,
+            }).then(() => {
+              window.location.reload(); // 重整頁面讓按鈕進入 Disable 狀態
+            });
+          }
         }
       });
     });
   }
 
-  // 5. 打卡歷程邏輯
   // ==========================================
-  let currentHistoryDate = new Date(); // 當前查看的月份
+  // 5. 打卡歷程邏輯 (維持不變)
+  // ==========================================
+  let currentHistoryDate = new Date();
   const monthDisplay = document.getElementById("history-month-display");
   const historyContainer = document.getElementById("history-list-container");
 
-  // 模擬打卡歷程 API
   const fetchHistoryApi = async (year, month) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        // 根據你提供的 attendance_records table 結構模擬資料
         resolve([
           {
             workDate: `${year}-${month.toString().padStart(2, "0")}-14`,
@@ -166,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  // 狀態 Badge 轉換字典
   const statusMap = {
     ON_TIME: { text: "準時", color: "success" },
     LATE: { text: "遲到", color: "danger" },
@@ -198,7 +304,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const outStat =
           statusMap[record.clockOutStatus] || statusMap["MISSING"];
 
-        // 點數顯示樣式
         let pointsHtml = "";
         if (record.pointsAwarded > 0) {
           pointsHtml = `<span class="text-success fw-bold">+${record.pointsAwarded} 點</span>`;
@@ -208,7 +313,6 @@ document.addEventListener("DOMContentLoaded", function () {
           pointsHtml = `<span class="text-muted fw-bold">0 點</span>`;
         }
 
-        // 拆解日期 (例如: 14日)
         const day = record.workDate.split("-")[2];
 
         const html = `
@@ -255,7 +359,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // 綁定月份切換按鈕
   document.getElementById("btn-prev-month").addEventListener("click", () => {
     currentHistoryDate.setMonth(currentHistoryDate.getMonth() - 1);
     loadHistory();
@@ -266,6 +369,5 @@ document.addEventListener("DOMContentLoaded", function () {
     loadHistory();
   });
 
-  // 載入當月資料
   loadHistory();
 });
