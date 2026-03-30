@@ -111,7 +111,7 @@
               </div>
               <div class="col-5 text-end">
                 <div
-                  class="user-points-badge p-2 rounded-pill bg-soft-warning border border-warning"
+                  class="user-points-badge p-2 rounded-pill bg-soft-warning border border-warning d-inline-block"
                 >
                   <span class="text-warning fw-bold fs-14">
                     <i class="ri-coin-fill align-middle me-1"></i>
@@ -121,24 +121,88 @@
               </div>
             </div>
 
-            <div class="row mb-4">
-              <div class="col-12">
-                <div class="search-box">
-                  <input
-                    type="text"
-                    class="form-control bg-light border-0"
-                    placeholder="搜尋兌換券..."
-                  />
-                  <i class="ri-search-line search-icon"></i>
+            <ul
+              class="nav nav-pills nav-justified bg-light p-1 rounded-pill mb-4 shadow-sm"
+              role="tablist"
+            >
+              <li class="nav-item waves-effect waves-light">
+                <a
+                  class="nav-link active rounded-pill fw-medium"
+                  data-bs-toggle="tab"
+                  href="#shop-tab"
+                  role="tab"
+                >
+                  <i class="ri-store-2-line align-middle me-1"></i> 紅利商城
+                </a>
+              </li>
+              <li class="nav-item waves-effect waves-light">
+                <a
+                  class="nav-link rounded-pill fw-medium"
+                  data-bs-toggle="tab"
+                  href="#my-vouchers-tab"
+                  role="tab"
+                >
+                  <i class="ri-ticket-2-line align-middle me-1"></i> 我的票夾
+                </a>
+              </li>
+            </ul>
+
+            <div class="tab-content text-muted">
+              <div class="tab-pane active" id="shop-tab" role="tabpanel">
+                <div class="row mb-4">
+                  <div class="col-12">
+                    <div class="search-box">
+                      <input
+                        type="text"
+                        class="form-control bg-light border-0"
+                        placeholder="搜尋兌換券..."
+                        id="search-product-input"
+                      />
+                      <i class="ri-search-line search-icon"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="voucher-list-container">
+                  <div class="col-12 text-center mt-5">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="row" id="voucher-list-container">
-              <div class="col-12 text-center mt-5">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
+              <div class="tab-pane" id="my-vouchers-tab" role="tabpanel">
+                <ul
+                  class="nav nav-pills list-inline mb-4 d-flex justify-content-center gap-2"
+                  id="voucher-status-filter"
+                >
+                  <li class="nav-item">
+                    <button
+                      class="nav-link active btn btn-sm rounded-pill px-4"
+                      data-status="AVAILABLE"
+                    >
+                      可使用
+                    </button>
+                  </li>
+                  <li class="nav-item">
+                    <button
+                      class="nav-link btn btn-sm rounded-pill px-4"
+                      data-status="USED"
+                    >
+                      已使用
+                    </button>
+                  </li>
+                  <li class="nav-item">
+                    <button
+                      class="nav-link btn btn-sm rounded-pill px-4"
+                      data-status="EXPIRED"
+                    >
+                      已失效
+                    </button>
+                  </li>
+                </ul>
+
+                <div class="row" id="my-voucher-list-container"></div>
               </div>
             </div>
           </div>
@@ -259,6 +323,7 @@
     <!-- Header loader -->
     <script src="assets/js/importFile/header-loader.js"></script>
 
+    <script src="./assets/js/config.js"></script>
     <script src="assets/js/pages/rci-front-products.js"></script>
   </body>
 </html>
