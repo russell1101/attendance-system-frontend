@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("請聯絡後台");
     })
 
-    let username = document.querySelector("#username");
+    let email = document.querySelector("#email");
     let password = document.querySelector("#password-input");
     let btn_login = document.querySelector("button.btn-success");
 
     btn_login.addEventListener("click", function () {
-        if (!username.value) {
-            alert("請輸入使用者名稱");
+        if (!email.value) {
+            alert("請輸入信箱");
             return;
         };
         if (!password.value) {
@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         };
         let data = {
-            username: username.value,
+            email: email.value,
             passwordHash: password.value
         };
-        fetch("/attendances-project/frontUser/employee/login/employeeLogin", {
+        fetch(APP_CONFIG.API_BASE_URL + "/frontUser/employee/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,15 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(resp => resp.json())
             .then(result => {
-                if (result.success) {
-                    // 登入成功接收後端建議跳轉到指定頁面
-                    location = result.targetPath;
-                    if (location) {
-                        location.href = "./rci-echarts-back.html";
-                    }
+                if (result.success == 1) {
+                    location.href = "./rci-company-policy-front.html";
                 } else {
                     console.log(result.errMsg);
-                    alert("使⽤者名稱或密碼錯誤");
+                    alert("信箱或密碼錯誤");
                 }
             })
             .catch(err => {
