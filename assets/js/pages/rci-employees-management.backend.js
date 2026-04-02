@@ -1,21 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
-    new gridjs.Grid({
-        columns: ['編號', '員號', '部門', '姓名', '入職日', '紅利點數'],
-        sort: !0,    // 排序
-        pagination: { limit: 5 }, // 分頁
-        data: [
-            ['1', '001', '工程部', '王曉明', '2026/1/25', '2000'],
-            ['2', '002', '業務部', '李小花', '2025/6/10', '1000'],
-        ],
-        language: {                     // 框架文字中文設定
-            'pagination': {
-                'previous': '上一頁',
-                'next': '下一頁',
-                'showing': '顯示',
-                'to': '至',
-                'of': '共',
-                'results': '筆紀錄'
+    fetch(APP_CONFIG.API_BASE_URL + "/admin/manage")
+        .then(resp => resp.json())
+        .then(result => {
+            if (result.success == 1) {
+                const employees = result.data;
+                const tbody = document.querySelector('tbody');
+                employees.forEach((employee, index) => {
+                    tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${employee.employeeId}</td>
+                        <td>${employee.departmentId}</td>
+                        <td>${employee.name}</td>
+                        <td>${employee.hireDate}</td>
+                        <td>${employee.currentPoints}</td>
+                        <td>${employee.employeeStatusId}</td>
+                        <td><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-more-fill align-middle"></i>
+                                </button></td>
+                    </tr>
+                    `
+
+                })
+
+            } else {
+                console.log(result.errMsg);
+                alert("資料讀取失敗");
             }
-        }
-    }).render(document.getElementById('table-hidden-column'));
+        })
+        .catch(err => {
+            console.log(err);
+            alert("系統錯誤");
+        })
 })

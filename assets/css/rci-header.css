@@ -129,6 +129,7 @@ body {
 
 /* 通知圖標 */
 .notification-icon {
+    display: none;
     position: relative;
     cursor: pointer;
     padding: 8px;
