@@ -25,7 +25,7 @@
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
-        <!-- NavBar CSS -->
+    <!-- NavBar CSS -->
     <link href="assets/css/rci-navBar.css" rel="stylesheet" />
 
 
@@ -35,8 +35,8 @@
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-      <!-- NavBar 容器 -->
-      <div id="navBar-placeholder"></div>
+        <!-- NavBar 容器 -->
+        <div id="navBar-placeholder"></div>
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -48,19 +48,108 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">員工管理設定</h4>
-                                </div><!-- end card header -->
-
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">員工列表詳情</h5>
+                                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
+                                        id="create-btn" data-bs-target="#showModal">
+                                        <i class="ri-add-line align-bottom me-1"></i> 新增員工
+                                    </button>
+                                </div>
                                 <div class="card-body">
-                                    <div id="table-hidden-column"></div>
-                                </div><!-- end card-body -->
+                                    <div class="table-responsive">
+                                        <table id="buttons-datatables"
+                                            class="display table table-bordered table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="width: 50px;">編號</th>
+                                                    <th>員編</th>
+                                                    <th>部門</th>
+                                                    <th>姓名</th>
+                                                    <th>入職日</th>
+                                                    <th>紅利點數</th>
+                                                    <th>狀態</th>
+                                                    <th>更新</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div><!-- end card -->
                         </div>
                         <!-- end col -->
                     </div>
                     <!-- end row -->
+                    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-light p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel">新增員工資料</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                        id="close-modal"></button>
+                                </div>
 
+                                <form action="/employees/save" method="POST" autocomplete="off">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="name-field" class="form-label">員工姓名</label>
+                                            <input type="text" id="name-field" name="name" class="form-control"
+                                                placeholder="請輸入姓名" required />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="title-field" class="form-label">部門</label>
+                                            <input type="text" id="title-field" name="title" class="form-control"
+                                                placeholder="例如：工程部" required />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="email-field" class="form-label">電子郵件</label>
+                                            <input type="email" id="email-field" name="email" class="form-control"
+                                                placeholder="請輸入 Email" required />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="phone-field" class="form-label">紅利點數</label>
+                                            <input type="text" id="phone-field" name="phone" class="form-control"
+                                                placeholder="請輸入數字" required />
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label for="joinDate-field" class="form-label">入職日期</label>
+                                                    <input type="date" id="joinDate-field" name="joinDate"
+                                                        class="form-control" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label for="department-field" class="form-label">狀態</label>
+                                                    <select class="form-select" name="department" id="department-field"
+                                                        required>
+                                                        <option value="" selected>請選擇狀態</option>
+                                                        <option value="研發部">在職</option>
+                                                        <option value="人事部">離職</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">取消</button>
+                                            <button type="submit" class="btn btn-success" id="add-btn">確認新增</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -93,7 +182,7 @@
     <!-- gridjs init -->
     <!-- <script src="assets/js/pages/gridjs.init.js"></script> -->
     <script src="assets/js/config.js"></script>
-    <script src="assets/js/pages/rci-department-management.backend.js"></script>
+    <script src="assets/js/pages/rci-employees-management.backend.js"></script>
     <!-- NavBar loader -->
     <script src="assets/js/importFile/navBar-loader.js"></script>
     <!-- App js -->
