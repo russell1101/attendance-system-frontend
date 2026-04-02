@@ -135,7 +135,9 @@ function formatDate(date) {
 
 // 載入部門
 function loadDepartments() {
-    fetch('chart?action=getDepts')
+    fetch('chart?action=getDepts',{
+        credentials: 'include'
+    })
         .then(function(res) {
             return res.json();
         })
@@ -164,7 +166,9 @@ function loadEmployees(deptId) {
         url += '&deptId=' + deptId;
     }
 
-    fetch(url)
+    fetch(url,{
+        credentials: 'include'
+    })
         .then(function(res) {
             return res.json();
         })
@@ -208,7 +212,9 @@ function searchChart() {
         url += '&empId=' + empId;
     }
 
-    fetch(url)
+    fetch(url,{
+        credentials: 'include'
+    })
         .then(function(res) {
             return res.json();
         })
