@@ -200,7 +200,7 @@ function searchChart() {
         return;
     }
 
-    var url = 'chart?startDate=' + startDate + '&endDate=' + endDate;
+    var url = 'chart/chartData?startDate=' + startDate + '&endDate=' + endDate;
     if (deptId) {
         url += '&deptId=' + deptId;
     }
