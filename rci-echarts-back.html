@@ -1,13 +1,5 @@
-<!doctype html>
-<html
-  lang="zh-TW"
-  data-layout="vertical"
-  data-topbar="light"
-  data-sidebar="dark"
-  data-sidebar-size="sm-hover"
-  data-sidebar-image="none"
-  data-preloader="disable"
->
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>出勤管理 | RCI</title>
@@ -56,7 +48,6 @@
               <!-- 篩選區域 -->
               <div class="filter-section">
                 <div class="filter-row">
-                  <!-- 時間範圍按鈕 -->
                   <div class="filter-group">
                     <button class="filter-btn active" data-range="month">
                       當月
@@ -67,7 +58,6 @@
                     <button class="filter-btn" data-range="half">半年</button>
                   </div>
 
-                  <!-- 自訂日期 -->
                   <div class="filter-group">
                     <span style="color: #6c757d; font-size: 14px"
                       >自訂日期</span
@@ -77,24 +67,19 @@
                     <input type="date" class="filter-date" id="endDate" />
                   </div>
 
-                  <!-- 部門/員工下拉 -->
                   <div class="filter-group">
                     <select class="filter-select" id="departmentSelect">
                       <option value="">全公司</option>
-                      <option value="1">研發部</option>
-                      <option value="2">業務部</option>
-                      <option value="3">人資部</option>
                     </select>
                     <select class="filter-select" id="employeeSelect">
                       <option value="">全體員工</option>
-                      <option value="1">王小明</option>
-                      <option value="2">李小華</option>
                     </select>
                   </div>
 
-                  <!-- 搜尋按鈕 -->
                   <button class="filter-search-btn" id="searchBtn">搜尋</button>
-                  <button class="filter-download-btn" id="downloadBtn">下載</button>
+                  <button class="filter-download-btn" id="downloadBtn">
+                    下載
+                  </button>
                 </div>
               </div>
             </div>
@@ -149,18 +134,18 @@
                 <div class="stats-summary">
                   <div class="stat-item">
                     <div class="stat-label">本月遲到總人次</div>
-                    <div class="stat-value warning" id="statLateCount">85</div>
+                    <div class="stat-value warning" id="statLateCount">0</div>
                   </div>
                   <div class="stat-item">
                     <div class="stat-label">平均出勤率</div>
                     <div class="stat-value highlight" id="statAttendanceRate">
-                      98%
+                      0%
                     </div>
                   </div>
                   <div class="stat-item">
                     <div class="stat-label">異常未打卡</div>
                     <div class="stat-value danger" id="statMissingCount">
-                      3 人
+                      0 人
                     </div>
                   </div>
                 </div>
@@ -170,6 +155,7 @@
           </div>
         </div>
       </div>
+      
       <!-- End Main Content -->
     </div>
     <!-- END layout-wrapper -->
