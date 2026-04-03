@@ -50,17 +50,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 錯誤
       if (result.success !== 1) {
-        Swal.fire({
-          icon: "error",
-          title: "狀態讀取失敗",
-          text: result.errMsg || "系統發生錯誤",
-        }).then(() => {
-          if (result.success === -999) {
-            window.location.href = "./rci-login-front.html";
-          } else {
+        if (result.success === -999) {
+          Swal.fire({
+            icon: "error",
+            title: "尚未登入",
+            text: "請先登入系統",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./rci-login-front.html";
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "狀態讀取失敗",
+            text: result.errMsg || "系統發生錯誤",
+          }).then(() => {
             window.location.reload();
-          }
-        });
+          });
+        }
         return;
       }
 
@@ -103,9 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // TODO 正式改直接呼叫 先等模擬登入把 Session 建立好，再開始跑邏輯
-  devMockLogin().then(() => {
-    loadClockStatus();
-  });
+  //   devMockLogin().then(() => {
+  //     loadClockStatus();
+  //   });
+
+  loadClockStatus();
 
   // 4. 按鈕點擊邏輯 (上下班打卡)
   // 上班打卡
@@ -136,15 +146,23 @@ document.addEventListener("DOMContentLoaded", function () {
           const res = result.value;
 
           if (res.success !== 1) {
-            Swal.fire({
-              icon: "error",
-              title: "打卡失敗",
-              text: res.errMsg || "發生未知錯誤",
-            }).then(() => {
-              if (res.success === -999)
+            if (res.success === -999) {
+              Swal.fire({
+                icon: "error",
+                title: "尚未登入",
+                text: "請先登入系統",
+              }).then(() => {
                 window.location.href = "./rci-login-front.html";
-              else window.location.reload();
-            });
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "打卡失敗",
+                text: res.errMsg || "發生未知錯誤",
+              }).then(() => {
+                window.location.reload();
+              });
+            }
           } else {
             let successMsg = `您已於 <b>${timeDisplay.textContent}</b> 完成上班打卡。`;
             if (res.data) {
@@ -203,15 +221,23 @@ document.addEventListener("DOMContentLoaded", function () {
           const res = result.value;
 
           if (res.success !== 1) {
-            Swal.fire({
-              icon: "error",
-              title: "打卡失敗",
-              text: res.errMsg || "發生未知錯誤",
-            }).then(() => {
-              if (res.success === -999)
+            if (res.success === -999) {
+              Swal.fire({
+                icon: "error",
+                title: "尚未登入",
+                text: "請先登入系統",
+              }).then(() => {
                 window.location.href = "./rci-login-front.html";
-              else window.location.reload();
-            });
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "打卡失敗",
+                text: res.errMsg || "發生未知錯誤",
+              }).then(() => {
+                window.location.reload();
+              });
+            }
           } else {
             let successMsg = `已於 <b>${timeDisplay.textContent}</b> 完成下班打卡`;
             if (res.data) {
@@ -266,10 +292,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (result.success !== 1) {
         if (result.success === -999) {
-          window.location.href = "./rci-login-front.html";
-          return [];
+          Swal.fire({
+            icon: "error",
+            title: "尚未登入",
+            text: "請先登入系統",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./rci-login-front.html";
+            }
+          });
+          // 拋出特定標記，讓外層 catch 知道不需要再跳錯誤彈窗
+          throw new Error("UNAUTHORIZED");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "讀取失敗",
+            text: result.errMsg || "發生未知錯誤",
+          });
+          throw new Error(result.errMsg || "載入失敗");
         }
-        throw new Error(result.errMsg || "載入失敗");
       }
 
       // 若後端為 null (通常代表沒資料)，給空陣列
