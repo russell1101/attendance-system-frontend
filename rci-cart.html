@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
   lang="en"
   data-layout="vertical"
@@ -60,79 +60,14 @@
       <!-- NavBar 容器 -->
       <div id="navBar-placeholder"></div>
 
-      <!-- removeNotificationModal -->
-      <div
-        id="removeNotificationModal"
-        class="modal fade zoomIn"
-        tabindex="-1"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                id="NotificationModalbtn-close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="mt-2 text-center">
-                <lord-icon
-                  src="https://cdn.lordicon.com/gsqxdxog.json"
-                  trigger="loop"
-                  colors="primary:#f7b84b,secondary:#f06548"
-                  style="width: 100px; height: 100px"
-                ></lord-icon>
-                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                  <h4>Are you sure ?</h4>
-                  <p class="text-muted mx-4 mb-0">
-                    Are you sure you want to remove this Notification ?
-                  </p>
-                </div>
-              </div>
-              <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                <button
-                  type="button"
-                  class="btn w-sm btn-light"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  class="btn w-sm btn-danger"
-                  id="delete-notification"
-                >
-                  Yes, Delete It!
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-      <!-- Vertical Overlay-->
-      <div class="vertical-overlay"></div>
-
       <!-- ============================================================== -->
       <!-- Start right Content here -->
       <!-- ============================================================== -->
       <div class="main-content">
         <div class="page-content">
           <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
-                <div
-                  class="page-title-box d-sm-flex align-items-center justify-content-between"
-                >
-                  <h4 class="mb-sm-0 display-6 fw-bold">紅利/商品管理</h4>
-                </div>
-              </div>
+            <div class="page-header">
+              <h1 class="page-title">紅利/商品管理</h1>
             </div>
             <div class="row mb-4">
               <div class="col-12">
@@ -183,9 +118,9 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="card" id="productList">
-                      <div class="card-header bg-light border-0">
-                        <div class="row g-2">
-                          <div class="col-xl-3 col-md-4">
+                      <div class="filter-section">
+                        <div class="filter-row">
+                          <div class="filter-group">
                             <div class="search-box">
                               <input
                                 type="text"
@@ -195,16 +130,14 @@
                               <i class="ri-search-line search-icon"></i>
                             </div>
                           </div>
-                          <div class="col-auto ms-auto">
-                            <button
-                              type="button"
-                              class="btn btn-success"
-                              id="btn-add-product"
-                            >
-                              <i class="ri-add-line align-bottom me-1"></i>
-                              新增商品
-                            </button>
-                          </div>
+                          <button
+                            type="button"
+                            class="filter-add-btn"
+                            id="btn-add-product"
+                          >
+                            <i class="ri-add-line align-bottom me-1"></i>
+                            新增商品
+                          </button>
                         </div>
                       </div>
                       <div class="card-body">
@@ -228,16 +161,125 @@
                             ></tbody>
                           </table>
                         </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between px-1 pb-1"
+                        >
+                          <span
+                            class="text-muted small"
+                            id="productPaginationInfo"
+                          ></span>
+                          <div id="productPagination"></div>
+                        </div>
                       </div>
                     </div>
 
                     <div class="card d-none" id="productEdit">
                       <div class="card-header">
-                        <h4 class="card-title mb-0">編輯商品</h4>
+                        <h4 class="card-title mb-0" id="editFormTitle">
+                          編輯商品
+                        </h4>
                       </div>
                       <div class="card-body">
                         <form id="editProductForm">
-                          <div class="text-end mt-3">
+                          <input type="hidden" id="edit-product-id" />
+                          <input type="hidden" id="edit-version" />
+
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label fw-semibold"
+                                >商品名稱
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="edit-name"
+                                placeholder="請輸入商品名稱"
+                                required
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label fw-semibold"
+                                >所需點數
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="edit-points"
+                                min="0"
+                                placeholder="0"
+                                required
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label fw-semibold"
+                                >庫存數量
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="edit-stock"
+                                min="0"
+                                placeholder="0"
+                                required
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label fw-semibold"
+                                >有效天數</label
+                              >
+                              <input
+                                type="number"
+                                class="form-control"
+                                id="edit-valid-days"
+                                min="1"
+                                placeholder="不填表示永久有效"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label fw-semibold"
+                                >上架狀態</label
+                              >
+                              <select class="form-select" id="edit-status">
+                                <option value="上架中">上架中</option>
+                                <option value="下架">下架</option>
+                              </select>
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label fw-semibold"
+                                >商品描述</label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="edit-description"
+                                rows="3"
+                                placeholder="請輸入商品說明…"
+                              ></textarea>
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label fw-semibold"
+                                >商品圖片</label
+                              >
+                              <input
+                                type="file"
+                                class="form-control"
+                                id="edit-image"
+                                accept="image/*"
+                              />
+                              <div class="mt-2">
+                                <img
+                                  id="edit-image-preview"
+                                  src=""
+                                  class="d-none product-img-preview"
+                                  alt="商品預覽圖"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="text-end mt-4">
                             <button
                               type="button"
                               class="btn btn-light"
@@ -245,8 +287,9 @@
                             >
                               返回
                             </button>
-                            <button type="submit" class="btn btn-success">
-                              儲存編輯
+                            <button type="submit" class="btn btn-success ms-2">
+                              <i class="ri-save-3-line align-middle me-1"></i
+                              >儲存
                             </button>
                           </div>
                         </form>
@@ -260,40 +303,18 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="card">
-                      <div class="card-header bg-light border-0">
-                        <div class="row g-2 align-items-center">
-                          <div class="col-xl-3 col-md-4">
+                      <div class="filter-section">
+                        <div class="filter-row">
+                          <div class="filter-group">
                             <div class="search-box">
                               <input
                                 type="text"
                                 class="form-control"
-                                id="searchHistory"
-                                placeholder="搜尋員工姓名或禮券序號..."
+                                id="filterHistoryProduct"
+                                placeholder="搜尋商品名稱..."
                               />
                               <i class="ri-search-line search-icon"></i>
                             </div>
-                          </div>
-                          <div class="col-xl-2 col-md-3">
-                            <select class="form-select" id="filterStatus">
-                              <option value="ALL">所有狀態</option>
-                              <option value="AVAILABLE">
-                                未使用 (Available)
-                              </option>
-                              <option value="USED">已使用 (Used)</option>
-                              <option value="EXPIRED">已過期 (Expired)</option>
-                            </select>
-                          </div>
-                          <div class="col-auto ms-auto">
-                            <button
-                              type="button"
-                              class="btn btn-soft-info"
-                              onclick="AlertUtil.success('匯出報表功能開發中')"
-                            >
-                              <i
-                                class="ri-file-download-line align-bottom me-1"
-                              ></i>
-                              匯出報表
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -303,21 +324,19 @@
                             class="table align-middle table-nowrap"
                             id="historyTable"
                           >
-                            <thead class="table-light text-center">
+                            <thead class="table-dark text-center">
                               <tr>
-                                <th>兌換時間</th>
-                                <th>禮券序號</th>
-                                <th>員工姓名</th>
-                                <th>禮券名稱</th>
-                                <th>扣除點數</th>
+                                <th style="width: 48px"></th>
+                                <th>商品名稱</th>
                                 <th>狀態</th>
-                                <th>使用時間</th>
+                                <th>庫存</th>
+                                <th>已發出</th>
+                                <th>可使用</th>
+                                <th>已使用</th>
+                                <th>已過期</th>
                               </tr>
                             </thead>
-                            <tbody
-                              class="text-center"
-                              id="historyTableBody"
-                            ></tbody>
+                            <tbody id="historyTableBody"></tbody>
                           </table>
                         </div>
                       </div>
@@ -328,7 +347,7 @@
 
               <div class="tab-pane fade" id="tab-setting" role="tabpanel">
                 <div class="row justify-content-center">
-                  <div class="col-xl-6 col-lg-8">
+                  <div class="col-xl-5 col-lg-7">
                     <div class="card shadow-sm border-0">
                       <div class="card-header align-items-center d-flex">
                         <h4 class="card-title mb-0 flex-grow-1">
@@ -337,21 +356,17 @@
                         </h4>
                       </div>
                       <div class="card-body">
+                        <div class="alert alert-info border-0 shadow-none mb-4">
+                          <i class="ri-information-line me-1"></i>
+                          設定全域預設點數規則。若部門已單獨設定非零數值，則以部門設定優先；未設定（或設為 0）的部門將採用此全域數值。
+                        </div>
                         <form id="pointSettingsForm">
                           <div class="row gy-4">
                             <div class="col-12">
-                              <div
-                                class="alert alert-info border-0 shadow-none mb-0"
-                              >
-                                設定員工每日出勤狀態對應的紅利點數增減。正數為獎勵，負數為扣除。
-                              </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                              <label class="form-label text-success fw-bold"
-                                ><i class="ri-checkbox-circle-line me-1"></i
-                                >準時上班 (ON_TIME)</label
-                              >
+                              <label class="form-label text-success fw-bold">
+                                <i class="ri-checkbox-circle-line me-1"></i>
+                                準時上班獎勵點數
+                              </label>
                               <div class="input-group">
                                 <span
                                   class="input-group-text bg-success-subtle text-success border-success-subtle"
@@ -361,18 +376,18 @@
                                   type="number"
                                   class="form-control"
                                   id="set-on-time"
-                                  value="10"
                                   min="0"
+                                  placeholder="例：10"
                                 />
                                 <span class="input-group-text">點</span>
                               </div>
                             </div>
 
-                            <div class="col-sm-6">
-                              <label class="form-label text-danger fw-bold"
-                                ><i class="ri-timer-2-line me-1"></i>遲到
-                                (LATE)</label
-                              >
+                            <div class="col-12">
+                              <label class="form-label text-danger fw-bold">
+                                <i class="ri-timer-2-line me-1"></i>
+                                遲到扣除點數
+                              </label>
                               <div class="input-group">
                                 <span
                                   class="input-group-text bg-danger-subtle text-danger border-danger-subtle"
@@ -382,56 +397,14 @@
                                   type="number"
                                   class="form-control"
                                   id="set-late"
-                                  value="5"
                                   min="0"
+                                  placeholder="例：5"
                                 />
                                 <span class="input-group-text">點</span>
                               </div>
                             </div>
 
-                            <div class="col-sm-6">
-                              <label class="form-label text-warning fw-bold"
-                                ><i class="ri-run-line me-1"></i>早退
-                                (EARLY_LEAVE)</label
-                              >
-                              <div class="input-group">
-                                <span
-                                  class="input-group-text bg-warning-subtle text-warning border-warning-subtle"
-                                  >-</span
-                                >
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  id="set-early"
-                                  value="10"
-                                  min="0"
-                                />
-                                <span class="input-group-text">點</span>
-                              </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                              <label class="form-label text-secondary fw-bold"
-                                ><i class="ri-error-warning-line me-1"></i
-                                >缺卡/曠職 (MISSING)</label
-                              >
-                              <div class="input-group">
-                                <span
-                                  class="input-group-text bg-secondary-subtle text-secondary border-secondary-subtle"
-                                  >-</span
-                                >
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  id="set-missing"
-                                  value="50"
-                                  min="0"
-                                />
-                                <span class="input-group-text">點</span>
-                              </div>
-                            </div>
-
-                            <div class="col-12 mt-4 text-end">
+                            <div class="col-12 text-end">
                               <button
                                 type="submit"
                                 class="btn btn-primary px-4"
@@ -472,99 +445,17 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <!-- removeItemModal -->
-    <div
-      id="removeItemModal"
-      class="modal fade zoomIn"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              id="btn-close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="mt-2 text-center">
-              <lord-icon
-                src="https://cdn.lordicon.com/gsqxdxog.json"
-                trigger="loop"
-                colors="primary:#f7b84b,secondary:#f06548"
-                style="width: 100px; height: 100px"
-              ></lord-icon>
-              <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                <h4>Are you Sure ?</h4>
-                <p class="text-muted mx-4 mb-0">
-                  Are you Sure You want to Remove this Product ?
-                </p>
-              </div>
-            </div>
-            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-              <button
-                type="button"
-                class="btn w-sm btn-light"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn w-sm btn-danger"
-                id="delete-product"
-              >
-                Yes, Delete It!
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <!--start back-to-top-->
-    <button
-      onclick="topFunction()"
-      class="btn btn-danger btn-icon"
-      id="back-to-top"
-    >
-      <i class="ri-arrow-up-line"></i>
-    </button>
-    <!--end back-to-top-->
-
-    <!--preloader-->
-    <div id="preloader">
-      <div id="status">
-        <div class="spinner-border text-primary avatar-sm" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-        </div>
-    </div> -->
-
     <!-- JAVASCRIPT -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <!-- <script src="assets/libs/simplebar/simplebar.min.js"></script>
     <script src="assets/libs/node-waves/waves.min.js"></script>
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/plugins.js"></script> -->
 
     <!-- nouisliderribute js -->
-    <script src="assets/libs/nouislider/nouislider.min.js"></script>
-    <script src="assets/libs/wnumb/wNumb.min.js"></script>
+    <!-- <script src="assets/libs/nouislider/nouislider.min.js"></script>
+    <script src="assets/libs/wnumb/wNumb.min.js"></script> -->
 
     <!-- gridjs js -->
     <script src="assets/libs/gridjs/gridjs.umd.js"></script>
@@ -574,14 +465,15 @@
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- ecommerce product list -->
-    <script src="assets/js/pages/ecommerce-product-list.init.js"></script>
+    <!-- <script src="assets/js/pages/ecommerce-product-list.init.js"></script> -->
 
     <!-- App js -->
-    <script src="assets/js/app.js"></script>
+    <!--    <script src="assets/js/app.js"></script>-->
 
+    <script src="./assets/js/config.js"></script>
     <!-- NavBar loader -->
     <script src="assets/js/importFile/navBar-loader.js"></script>
 
-    <script src="assets/js/pages/rci-cart.js"></script>
+    <script src="./assets/js/pages/rci-cart.js"></script>
   </body>
 </html>
