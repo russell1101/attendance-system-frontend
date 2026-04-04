@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Temp
+*.tmp
+*.bak
+
+
+# 忽略第三方套件與靜態資源
+# assets/libs/
+# assets/fonts/
+# assets/images/
