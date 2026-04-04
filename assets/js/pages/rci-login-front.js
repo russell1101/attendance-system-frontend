@@ -26,12 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: "include", // set cookie進瀏覽器
             body: JSON.stringify(data)
         })
             .then(resp => resp.json())
             .then(result => {
                 if (result.success == 1) {
-                    location.href = "./rci-company-policy-front.html";
+                    location.href = "./rci-front-clockin.html";
                 } else {
                     console.log(result.errMsg);
                     alert("信箱或密碼錯誤");
