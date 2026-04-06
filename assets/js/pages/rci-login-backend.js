@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         fetch("/attendances-project/frontUser/employee/login/employeeLogin", {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
