@@ -20,7 +20,274 @@
     box-shadow: 0 4px 6px rgba(10, 179, 156, 0.2);
 }
 
+/* === 頁面標題 === */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #495057;
+    margin: 0 0 16px 0;
+}
+
+/* === 篩選區域 === */
+.filter-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filter-download-btn {
+    padding: 8px 24px;
+    background: #00b8d9;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background 0.2s;
+}
+
+.filter-download-btn:hover {
+    background: #0097b8;
+}
+
+.filter-add-btn {
+    padding: 8px 24px;
+    background: #0ab39c;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    transition: background 0.2s;
+}
+
+.filter-add-btn:hover {
+    background: #099885;
+}
+
 /* 確保隱藏編輯卡片時使用 d-none 是最高權重 */
 #productEdit.d-none {
     display: none !important;
+}
+
+/* === 商品縮圖（列表） === */
+.product-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    flex-shrink: 0;
+}
+
+.product-thumb-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px dashed #ced4da;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* === 商品圖片預覽（編輯表單） === */
+.product-img-preview {
+    max-height: 160px;
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    object-fit: contain;
+}
+
+/* === 分頁 === */
+#productPagination .page-item.active .page-link {
+    background-color: #0ab39c;
+    border-color: #0ab39c;
+}
+
+#productPagination .page-link {
+    color: #0ab39c;
+}
+
+#productPagination .page-link:hover {
+    color: #099885;
+}
+
+/* === 編輯表單區域 === */
+#editProductForm .form-label {
+    font-size: 13px;
+    color: #495057;
+}
+
+/* === 兌換紀錄 - 日期篩選輸入 === */
+.history-date-input {
+    min-width: 140px;
+    max-width: 160px;
+}
+
+/* === 兌換紀錄 - 彙總表格統計徽章 === */
+.stat-badge {
+    display: inline-block;
+    min-width: 36px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.stat-badge.stat-total {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.stat-badge.stat-available {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.stat-badge.stat-used {
+    background-color: #d1e7dd;
+    color: #0a3622;
+}
+
+.stat-badge.stat-expired {
+    background-color: #e2e3e5;
+    color: #41464b;
+}
+
+/* === 兌換紀錄 - 展開按鈕 === */
+.history-expand-btn {
+    background: none;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #6c757d;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.history-expand-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+    color: #343a40;
+}
+
+.history-expand-btn i {
+    transition: transform 0.25s ease;
+    font-size: 16px;
+}
+
+.history-expand-btn.is-expanded i {
+    transform: rotate(90deg);
+}
+
+/* === 兌換紀錄 - 展開明細面板 === */
+.detail-expand-row > td {
+    padding: 0 !important;
+    background-color: #f8f9fa;
+    border-top: none;
+}
+
+.detail-panel {
+    padding: 16px 20px 20px;
+    border-top: 2px solid #0ab39c;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === 兌換紀錄 - 明細篩選列 === */
+.detail-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.search-box-sm {
+    position: relative;
+    min-width: 160px;
+}
+
+.search-box-sm .form-control {
+    padding-left: 32px;
+}
+
+.search-box-sm .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    font-size: 14px;
+}
+
+.filter-select-sm {
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    height: 31px;
+}
+
+/* === 兌換紀錄 - 主列 hover === */
+.history-summary-row:hover td {
+    background-color: #f8f9fa;
+}
+
+/* === 兌換紀錄 - 彙總表格 tbody 置中（第2欄商品名稱靠左） === */
+#historyTable tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+#historyTable tbody td:nth-child(2) {
+    text-align: left;
+}
+
+/* === 兌換紀錄 - 明細表格 tbody 置中 === */
+.detail-panel table td {
+    text-align: center;
+    vertical-align: middle;
 }
