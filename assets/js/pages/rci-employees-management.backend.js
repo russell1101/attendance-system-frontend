@@ -178,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             location.reload();
                         } else {
                             alert('更新失敗');
+                            console.log(123);
                         }
                     });
             }
