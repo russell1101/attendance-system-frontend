@@ -21,22 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
             username: username.value,
             passwordHash: password.value
         };
-        fetch("/attendances-project/frontUser/employee/login/employeeLogin", {
+        fetch(APP_CONFIG.API_BASE_URL + "/admin/login", {
             method: 'POST',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: "include", // set cookie進瀏覽器
             body: JSON.stringify(data)
         })
             .then(resp => resp.json())
             .then(result => {
-                if (result.success) {
-                    // 登入成功接收後端建議跳轉到指定頁面
-                    location = result.targetPath;
-                    if (location) {
-                        location.href = "./rci-echarts-back.html";
-                    }
+                if (result.success == 1) {
+                    location.href = "./rci-echarts-back.html";
                 } else {
                     console.log(result.errMsg);
                     alert("使⽤者名稱或密碼錯誤");
