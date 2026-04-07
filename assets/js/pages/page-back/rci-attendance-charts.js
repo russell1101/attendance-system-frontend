@@ -63,22 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  // 統一 resize 所有圖表
-  function resizeAllCharts() {
-    for (var key in chartInstances) {
-      var chart = chartInstances[key];
-      if (chart && !chart.isDisposed()) {
-        chart.resize();
-      }
-    }
-  }
-
   var ws = new WebSocket(
     APP_CONFIG.API_BASE_URL.replace(/^http/, "ws") + "/ws/admin/chart",
   );
 
   ws.onopen = function () {
     console.log("WebSocket 已連線");
+    searchChart();
   };
 
   ws.onmessage = function (event) {
@@ -110,6 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(resizeAllCharts, 100);
   });
 });
+
+// 統一 resize 所有圖表
+function resizeAllCharts() {
+  for (var key in chartInstances) {
+    var chart = chartInstances[key];
+    if (chart && !chart.isDisposed()) {
+      chart.resize();
+    }
+  }
+}
 
 // ========== 設定日期 ==========
 
@@ -273,6 +274,9 @@ function searchChart() {
 
       // 5. 更新統計
       updateStats(data.totalLateCounts, data.attendRate, data.noChecked);
+
+      // 強制重繪所有圖表
+      resizeAllCharts();
     })
     .catch(function (err) {
       console.log("搜尋失敗:", err);
