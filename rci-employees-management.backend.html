@@ -28,6 +28,9 @@
     <!-- NavBar CSS -->
     <link href="assets/css/rci-navBar.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="assets/css/management.css">
+
+
 
 </head>
 
@@ -69,6 +72,7 @@
                                                     <th>紅利點數</th>
                                                     <th>狀態</th>
                                                     <th>更新</th>
+                                                    <th>刪除</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -92,7 +96,7 @@
                                         id="close-modal"></button>
                                 </div>
 
-                                <form action="/employees/save" method="POST" autocomplete="off">
+                                <div id="form">
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="name-field" class="form-label">員工姓名</label>
@@ -102,8 +106,12 @@
 
                                         <div class="mb-3">
                                             <label for="title-field" class="form-label">部門</label>
-                                            <input type="text" id="title-field" name="title" class="form-control"
-                                                placeholder="例如：工程部" required />
+                                            <select id="title-field" name="title" class="form-control" required />
+                                            <option value="" selected>請選擇部門</option>
+                                            <option value="1">研發部</option>
+                                            <option value="2">人事部</option>
+                                            <option value="3">工程部</option>
+                                            </select>
                                         </div>
 
                                         <div class="mb-3">
@@ -132,8 +140,8 @@
                                                     <select class="form-select" name="department" id="department-field"
                                                         required>
                                                         <option value="" selected>請選擇狀態</option>
-                                                        <option value="研發部">在職</option>
-                                                        <option value="人事部">離職</option>
+                                                        <option value="1">在職</option>
+                                                        <option value="2">離職</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -143,10 +151,10 @@
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="button" class="btn btn-light"
                                                 data-bs-dismiss="modal">取消</button>
-                                            <button type="submit" class="btn btn-success" id="add-btn">確認新增</button>
+                                            <button type="button" class="btn btn-success" id="add-btn">確認新增</button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
