@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   var ws = new WebSocket(
-    "ws://127.0.0.1:8080/attendances-project/ws/admin/chart",
+    APP_CONFIG.API_BASE_URL.replace(/^http/, "ws") + "/ws/admin/chart",
   );
 
   ws.onopen = function () {
@@ -154,7 +154,7 @@ function formatDate(date) {
 
 // 載入部門
 function loadDepartments() {
-  fetch(APP_CONFIG.API_BASE_URL + "/chart/getDepts", {
+  fetch(APP_CONFIG.API_BASE_URL + "/admin/chart/getDepts", {
     credentials: "include",
   })
     .then(function (res) {
@@ -180,7 +180,7 @@ function loadDepartments() {
 
 // 載入員工
 function loadEmployees(deptId) {
-  var url = APP_CONFIG.API_BASE_URL + "/chart/getEmps";
+  var url = APP_CONFIG.API_BASE_URL + "/admin/chart/getEmps";
   if (deptId) {
     url += "?deptId=" + deptId;
   }
@@ -225,7 +225,7 @@ function searchChart() {
 
   var url =
     APP_CONFIG.API_BASE_URL +
-    "/chart/chartData?startDate=" +
+    "/admin/chart/chartData?startDate=" +
     startDate +
     "&endDate=" +
     endDate;
@@ -295,7 +295,7 @@ function downloadCsv() {
 
   var url =
     APP_CONFIG.API_BASE_URL +
-    "/chart/exportCsv?startDate=" +
+    "/admin/chart/exportCsv?startDate=" +
     startDate +
     "&endDate=" +
     endDate;
