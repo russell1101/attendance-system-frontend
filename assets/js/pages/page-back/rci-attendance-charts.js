@@ -1,8 +1,3 @@
-// rci-attendance-charts.js - 出勤管理圖表
-
-// ========== 後端位址（前後端分離用） ==========
-var BASE_URL = "http://127.0.0.1:8080/attendances-project/admin";
-
 // 儲存圖表實例
 var chartInstances = {
   pie: null,
@@ -159,7 +154,7 @@ function formatDate(date) {
 
 // 載入部門
 function loadDepartments() {
-  fetch(BASE_URL + "/chart/getDepts", {
+  fetch(APP_CONFIG.API_BASE_URL + "/chart/getDepts", {
     credentials: "include",
   })
     .then(function (res) {
@@ -185,7 +180,7 @@ function loadDepartments() {
 
 // 載入員工
 function loadEmployees(deptId) {
-  var url = BASE_URL + "/chart/getEmps";
+  var url = APP_CONFIG.API_BASE_URL + "/chart/getEmps";
   if (deptId) {
     url += "?deptId=" + deptId;
   }
@@ -229,7 +224,7 @@ function searchChart() {
   }
 
   var url =
-    BASE_URL +
+    APP_CONFIG.API_BASE_URL +
     "/chart/chartData?startDate=" +
     startDate +
     "&endDate=" +
@@ -299,7 +294,7 @@ function downloadCsv() {
   }
 
   var url =
-    BASE_URL +
+    APP_CONFIG.API_BASE_URL +
     "/chart/exportCsv?startDate=" +
     startDate +
     "&endDate=" +
