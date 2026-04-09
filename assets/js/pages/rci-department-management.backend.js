@@ -86,7 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         workStartTime: add_workTime.value,
                         workEndTime: add_leaveTime.value,
                         onTimeBonusPoints: add_onTimeAdd.value,
-                        latePenaltyPoints: add_lateTimeMinus.value
+                        latePenaltyPoints: add_lateTimeMinus.value,
+                        isActive: true
                     })
                 })
                     .then(resp => resp.json())
@@ -122,7 +123,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             alert("刪除成功");
                             location.reload();
                         } else {
-                            alert('刪除失敗');
+                            alert(result.errMsg);
+                            location.reload();
                         }
                     });
             }
@@ -169,7 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         workStartTime: update_workTime.value,
                         workEndTime: update_leaveTime.value,
                         onTimeBonusPoints: update_onTimeAdd.value,
-                        latePenaltyPoints: update_lateTimeMinus.value
+                        latePenaltyPoints: update_lateTimeMinus.value,
+                        isActive: true
                     })
                 })
                     .then(resp => resp.json())
