@@ -63,22 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  // 統一 resize 所有圖表
-  function resizeAllCharts() {
-    for (var key in chartInstances) {
-      var chart = chartInstances[key];
-      if (chart && !chart.isDisposed()) {
-        chart.resize();
-      }
-    }
-  }
-
   var ws = new WebSocket(
-    "ws://127.0.0.1:8080/attendances-project/ws/admin/chart",
+    APP_CONFIG.API_BASE_URL.replace(/^http/, "ws") + "/ws/admin/chart",
   );
 
   ws.onopen = function () {
     console.log("WebSocket 已連線");
+    searchChart();
   };
 
   ws.onmessage = function (event) {
@@ -110,6 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(resizeAllCharts, 100);
   });
 });
+
+// 統一 resize 所有圖表
+function resizeAllCharts() {
+  for (var key in chartInstances) {
+    var chart = chartInstances[key];
+    if (chart && !chart.isDisposed()) {
+      chart.resize();
+    }
+  }
+}
 
 // ========== 設定日期 ==========
 
@@ -154,7 +155,7 @@ function formatDate(date) {
 
 // 載入部門
 function loadDepartments() {
-  fetch(APP_CONFIG.API_BASE_URL + "/chart/getDepts", {
+  fetch(APP_CONFIG.API_BASE_URL + "/admin/chart/getDepts", {
     credentials: "include",
   })
     .then(function (res) {
@@ -180,7 +181,7 @@ function loadDepartments() {
 
 // 載入員工
 function loadEmployees(deptId) {
-  var url = APP_CONFIG.API_BASE_URL + "/chart/getEmps";
+  var url = APP_CONFIG.API_BASE_URL + "/admin/chart/getEmps";
   if (deptId) {
     url += "?deptId=" + deptId;
   }
@@ -225,7 +226,7 @@ function searchChart() {
 
   var url =
     APP_CONFIG.API_BASE_URL +
-    "/chart/chartData?startDate=" +
+    "/admin/chart/chartData?startDate=" +
     startDate +
     "&endDate=" +
     endDate;
@@ -273,6 +274,9 @@ function searchChart() {
 
       // 5. 更新統計
       updateStats(data.totalLateCounts, data.attendRate, data.noChecked);
+
+      // 強制重繪所有圖表
+      resizeAllCharts();
     })
     .catch(function (err) {
       console.log("搜尋失敗:", err);
@@ -295,7 +299,7 @@ function downloadCsv() {
 
   var url =
     APP_CONFIG.API_BASE_URL +
-    "/chart/exportCsv?startDate=" +
+    "/admin/chart/exportCsv?startDate=" +
     startDate +
     "&endDate=" +
     endDate;
