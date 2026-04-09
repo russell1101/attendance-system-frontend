@@ -68,6 +68,7 @@
                                                     <th>員編</th>
                                                     <th>部門</th>
                                                     <th>姓名</th>
+                                                    <th>信箱</th>
                                                     <th>入職日</th>
                                                     <th>紅利點數</th>
                                                     <th>狀態</th>
@@ -105,12 +106,13 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="title-field" class="form-label">部門</label>
-                                            <select id="title-field" name="title" class="form-control" required />
-                                            <option value="" selected>請選擇部門</option>
-                                            <option value="1">研發部</option>
-                                            <option value="2">人事部</option>
-                                            <option value="3">工程部</option>
+                                            <label for="department-field" class="form-label">部門</label>
+                                            <select id="department-field" name="department" class="form-select"
+                                                required>
+                                                <option value="" selected>請選擇部門</option>
+                                                <option value="1">研發部</option>
+                                                <option value="2">人事部</option>
+                                                <option value="3">工程部</option>
                                             </select>
                                         </div>
 
@@ -121,8 +123,8 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="phone-field" class="form-label">紅利點數</label>
-                                            <input type="text" id="phone-field" name="phone" class="form-control"
+                                            <label for="points-field" class="form-label">紅利點數</label>
+                                            <input type="text" id="points-field" name="points" class="form-control"
                                                 placeholder="請輸入數字" required />
                                         </div>
 
@@ -136,8 +138,8 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
-                                                    <label for="department-field" class="form-label">狀態</label>
-                                                    <select class="form-select" name="department" id="department-field"
+                                                    <label for="status-field" class="form-label">狀態</label>
+                                                    <select class="form-select" name="department" id="status-field"
                                                         required>
                                                         <option value="" selected>請選擇狀態</option>
                                                         <option value="1">在職</option>
@@ -194,7 +196,7 @@
     <!-- NavBar loader -->
     <script src="assets/js/importFile/navBar-loader.js"></script>
     <!-- App js -->
-    <script src="assets/js/app.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
 </body>
 
 </html>

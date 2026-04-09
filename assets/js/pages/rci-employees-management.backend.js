@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         return new Intl.DateTimeFormat('zh-TW', options).format(date);
     }
-    fetch(APP_CONFIG.API_BASE_URL + "/admin/employeeManage", {
+    fetch(APP_CONFIG.API_BASE_URL + "/admin/emp/manage", {
         credentials: "include", // set cookie進瀏覽器
     })
         .then(resp => resp.json())
@@ -24,46 +24,65 @@ document.addEventListener("DOMContentLoaded", function () {
                 const tbody = document.querySelector('tbody');
                 employees.forEach((employee, index) => {
                     tbody.innerHTML += `
-                    <tr data-id="${employee.employeeId}">
+                    <tr data-id="${employee.employeeId}" data-hiredate="${employee.hireDate}">
                         <td>${index + 1}</td>
                         <td>${employee.employeeId}</td>
                         <td>
                             <p class="para ">${employee.departmentName}</p>
-                            <select id="title-field update-department" name="title" class="form-control allUpdate -none" required />
-                            <option value="" selected>請選擇部門</option>
-                            <option value="1">研發部</option>
-                            <option value="2">人事部</option>
-                            <option value="3">工程部</option>
-                            </select>
+                            <div class="reveal -none">
+                                <select name="department" class="form-select update-department">
+                                <option value="${employee.departmentId}" selected>${employee.departmentName}</option>
+                                <option value="1">研發部</option>
+                                <option value="2">人事部</option>
+                                <option value="3">工程部</option>
+                                </select>
+                            </div>
                         </td>
                         <td>
                             <p class="para ">${employee.name}</p>
-                            <input type="text" id="update-name" class="allUpdate -none" placeholder="請輸入姓名" value="${employee.name}">
+                            <div class="reveal -none">
+                                <input type="text" class="form-control update-name" placeholder="請輸入姓名" value="${employee.name}">
+                            </div>
+                        </td>
+                        <td>
+                            <p class="para ">${employee.email}</p>
+                            <div class="reveal -none">
+                                <input type="text" class="form-control update-email" placeholder="請輸入信箱" value="${employee.email}">
+                            </div>
                         </td>
                         <td>${formatDate(employee.hireDate)}</td>
                         <td>
                             <p class="para ">${employee.currentPoints}</p>
-                            <input type="text" class="allUpdate -none" placeholder="請輸入紅利點數" value="${employee.currentPoints}">
+                            <div class="reveal -none">
+                                <input type="text" class="form-control update-points" placeholder="請輸入紅利點數" value="${employee.currentPoints}">
+                            </div>
                         </td>
                         <td>
                             <p class="para ">${employee.employeeStatus}</p>
-                            <select id="title-field update-status" name="title" class="form-control allUpdate -none" required />
-                            <option value="" selected>請選擇狀態</option>
-                            <option value="1">在職</option>
-                            <option value="2">離職</option>
+                            <div class="reveal -none">
+                                <select name="status" class="form-select update-status">
+                                <option value="${employee.employeeStatusId}" selected>${employee.employeeStatus}</option>
+                                <option value="1">在職</option>
+                                <option value="2">離職</option>
                             </select>
+                            </div>
                         </td>
-                        <td><button class="btn btn-soft-secondary btn-sm dropdown update" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="ri-pencil-fill align-middle"></i>
-                                </button></td>
+                        <td>
+                            <button class="btn btn-soft-secondary btn-sm dropdown para update" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-pencil-fill align-middle"></i>
+                            </button>
+                            <div class="reveal -none">
+                                <button class="btn btn-soft-secondary btn-sm dropdown update-save" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-save-fill align-middle"></i>
+                                </button>
+                            </div>
+                        </td>
                         <td><button class="btn btn-soft-secondary btn-sm dropdown remove" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="ri-delete-bin-2-line align-middle"></i>
                                 </button></td>
                     </tr>
                     `
-
                 })
-
             } else {
                 console.log(result.errMsg);
                 alert("資料讀取失敗");
@@ -78,17 +97,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const btn_add = document.querySelector("#create-btn");
     btn_add.addEventListener("click", function () {
         const add_name = document.querySelector("#name-field");
-        const add_department = document.querySelector("#title-field");
+        const add_department = document.querySelector("#department-field");
         const add_email = document.querySelector("#email-field");
-        const add_points = document.querySelector("#phone-field");
+        const add_points = document.querySelector("#points-field");
         const add_hireDate = document.querySelector("#joinDate-field");
-        const add_status = document.querySelector("#department-field");
+        const add_status = document.querySelector("#status-field");
         const btn_save = document.querySelector("#add-btn");
-        const add_form = document.querySelector("#form");
+        const add_form = document.querySelector("#form"); // 表單區塊
 
         if (add_form) {
             btn_save.addEventListener("click", function () {
-                fetch(APP_CONFIG.API_BASE_URL + '/admin/save', {
+                fetch(APP_CONFIG.API_BASE_URL + '/admin/emp/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: "include", // set cookie進瀏覽器
@@ -123,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (result) {
                 const tr = btn_delete.closest("tr");
                 const employeeId = tr.getAttribute("data-id");
-                fetch(APP_CONFIG.API_BASE_URL + '/admin/remove', {
+                fetch(APP_CONFIG.API_BASE_URL + '/admin/emp/remove', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: "include", // set cookie進瀏覽器
@@ -146,29 +165,47 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (e) {
         const btn_update = e.target.closest("button.update");
         if (btn_update) {
-            const tr_el = e.target.closest("tr");
-            let result = confirm("是否要異動資料");
+            let tr_el = e.target.closest("tr");
+            let p_els = tr_el.querySelectorAll(".para");
+            p_els.forEach(e => {
+                e.classList.add("-none");
+            });
+            let div_els = tr_el.querySelectorAll(".reveal");
+            div_els.forEach(e => {
+                e.classList.remove("-none");
+            });
+        }
+    });
+
+    document.addEventListener("click", function (e) {
+        const btn_update_save = e.target.closest("button.update-save");
+        if (btn_update_save) {
+            let result = confirm("是否要更新資料");
             if (result) {
-                let p_els = tr_el.
-                    querySelectorAll("p.para");
-                let allUpdate_els = tr_el.querySelectorAll(".allUpdate");
-                p_els.classname.add(".-none");
-                allUpdate_els.toggle(".-none");
+                let tr_el = e.target.closest("tr");
+                const update_id = tr_el.getAttribute("data-id");
+                let update_hireDate = tr_el.getAttribute("data-hiredate");
+                // 將數字字串轉回日期格式
+                update_hireDate = new Date(Number(update_hireDate));
+                const update_department = tr_el.querySelector(".update-department");
+                const update_name = tr_el.querySelector(".update-name");
+                const update_email = tr_el.querySelector(".update-email");
+                const update_points = tr_el.querySelector(".update-points");
+                const update_status = tr_el.querySelector(".update-status");
 
-                const employeeId = tr_el.getAttribute("data-id");
-                const update_departmaent = tr_el.querySelector("#update-department");
-                const update_name = tr_el.querySelector("#update-name");
-                const update_status = tr_el.querySelector("#update-status");
-
-                fetch(APP_CONFIG.API_BASE_URL + '/admin/update', {
+                fetch(APP_CONFIG.API_BASE_URL + '/admin/emp/update', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: "include", // set cookie進瀏覽器
                     body: JSON.stringify({
-                        employeeId: employeeId,
-                        departmentId: update_departmaent.value,
+                        employeeId: update_id,
+                        departmentId: update_department.value,
                         name: update_name.value,
-                        employeeStatusId: update_status.value
+                        email: update_email.value,
+                        currentPoints: update_points.value,
+                        employeeStatusId: update_status.value,
+                        isActive: true,
+                        hireDate: update_hireDate
                     })
                 })
                     .then(resp => resp.json())
@@ -178,16 +215,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             location.reload();
                         } else {
                             alert('更新失敗');
-                            console.log(123);
+                            location.reload();
                         }
                     });
+            } else {
+                location.reload();
             }
         }
     });
-
-
-
-
-
-
 })
