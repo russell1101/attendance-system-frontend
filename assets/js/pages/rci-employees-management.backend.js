@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // 部門選項袋子
+    let allDepartments = [];
+
     // 讀取全資料
     function formatDate(timestamp) {
         if (!timestamp) return "";
@@ -14,6 +17,18 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         return new Intl.DateTimeFormat('zh-TW', options).format(date);
     }
+
+    // 獲得部門選項
+    fetch(APP_CONFIG.API_BASE_URL + "/admin/dep/depOptions", {
+        credentials: "include", // set cookie進瀏覽器
+    })
+        .then(resp => resp.json())
+        .then(result => {
+            if (result.success == 1) {
+                allDepartments = result.data;
+            }
+        })
+
     fetch(APP_CONFIG.API_BASE_URL + "/admin/emp/manage", {
         credentials: "include", // set cookie進瀏覽器
     })
@@ -32,9 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="reveal -none">
                                 <select name="department" class="form-select update-department">
                                 <option value="${employee.departmentId}" selected>${employee.departmentName}</option>
-                                <option value="1">研發部</option>
-                                <option value="2">人事部</option>
-                                <option value="3">工程部</option>
+                                ${allDepartments
+                            .filter(dep => dep.departmentId !== employee.departmentId)
+                            .map((dep, index) => `<option value="${dep.departmentId}">${dep.departmentName}</option>`)
+                            .join("") // 去除陣列中,
+                        }
                                 </select>
                             </div>
                         </td>
@@ -106,6 +123,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const add_form = document.querySelector("#form"); // 表單區塊
 
         if (add_form) {
+            let str = ``;
+            add_department.innerHTML = `
+                <option value="" selected>請選擇部門</option>
+                ${allDepartments
+                    .map((dep, index) => `<option value="${dep.departmentId}">${dep.departmentName}</option>`)
+                    .join("") // 去除陣列中,
+                }
+            `
             btn_save.addEventListener("click", function () {
                 fetch(APP_CONFIG.API_BASE_URL + '/admin/emp/save', {
                     method: 'POST',
