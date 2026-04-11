@@ -136,6 +136,7 @@
 #productPagination .page-item.active .page-link {
     background-color: #0ab39c;
     border-color: #0ab39c;
+    color: white;
 }
 
 #productPagination .page-link {

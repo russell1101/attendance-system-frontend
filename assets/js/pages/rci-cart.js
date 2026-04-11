@@ -25,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   }
 
-  let allProducts = [];       // 從 API 取回的完整資料
-  let filteredProducts = [];  // 搜尋過濾後
+  let allProducts = []; // 從 API 取回的完整資料
+  let filteredProducts = []; // 搜尋過濾後
   let currentPage = 1;
   let currentEditProduct = null; // 正在編輯的原始物件（null = 新增模式）
-  let editImageBase64 = null;    // 使用者新選取的圖片 Base64
+  let editImageBase64 = null; // 使用者新選取的圖片 Base64
 
   // ===================== 工具函式 =====================
 
@@ -54,7 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
         缺貨: "badge bg-danger-subtle text-danger text-uppercase",
         下架: "badge bg-secondary-subtle text-secondary text-uppercase",
       };
-      const cls = map[status] || "badge bg-warning-subtle text-warning text-uppercase";
+      const cls =
+        map[status] || "badge bg-warning-subtle text-warning text-uppercase";
       return `<span class="${cls}">${status}</span>`;
     },
 
@@ -118,7 +119,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // ===================== 搜尋 & 分頁 =====================
 
   function applyFilter() {
-    const keyword = (document.querySelector("#productList .search") || {}).value || "";
+    const keyword =
+      (document.querySelector("#productList .search") || {}).value || "";
     const kw = keyword.trim().toLowerCase();
     filteredProducts = allProducts.filter((p) => {
       return (
@@ -155,7 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const end = Math.min(currentPage * PAGE_SIZE, total);
 
     if (info) {
-      info.textContent = total > 0 ? `顯示 ${start}–${end} / 共 ${total} 筆` : "";
+      info.textContent =
+        total > 0 ? `顯示 ${start}–${end} / 共 ${total} 筆` : "";
     }
 
     if (totalPages <= 1) {
@@ -190,11 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===================== 初始化 =====================
 
-  // TODO: [MOCK] 正式上線前移除以下 mock 登入呼叫，改由正式登入頁跳轉後攜帶 session 進入
-  fetch(`${API_BASE}/admin/mock-login`, { credentials: "include" })
-    .then((res) => res.json())
-    .then(() => fetchProducts())
-    .catch(() => Swal.fire("錯誤", "mock 登入失敗，請確認後端服務是否啟動", "error"));
+  fetchProducts();
 
   const searchInput = document.querySelector("#productList .search");
   if (searchInput) {
@@ -221,16 +220,31 @@ document.addEventListener("DOMContentLoaded", function () {
     editImageBase64 = null;
 
     const isAdd = !product;
-    document.getElementById("editFormTitle").textContent = isAdd ? "新增商品" : "編輯商品";
+    document.getElementById("editFormTitle").textContent = isAdd
+      ? "新增商品"
+      : "編輯商品";
 
-    document.getElementById("edit-product-id").value = product ? product.productId : "";
-    document.getElementById("edit-version").value = product ? product.version : "";
-    document.getElementById("edit-name").value = product ? product.productName : "";
-    document.getElementById("edit-description").value = product ? product.description || "" : "";
-    document.getElementById("edit-points").value = product ? product.requiredPoints : "";
+    document.getElementById("edit-product-id").value = product
+      ? product.productId
+      : "";
+    document.getElementById("edit-version").value = product
+      ? product.version
+      : "";
+    document.getElementById("edit-name").value = product
+      ? product.productName
+      : "";
+    document.getElementById("edit-description").value = product
+      ? product.description || ""
+      : "";
+    document.getElementById("edit-points").value = product
+      ? product.requiredPoints
+      : "";
     document.getElementById("edit-stock").value = product ? product.stock : "";
-    document.getElementById("edit-valid-days").value = product ? product.validDays || "" : "";
-    document.getElementById("edit-status").value = product && product.removedAt ? "下架" : "上架中";
+    document.getElementById("edit-valid-days").value = product
+      ? product.validDays || ""
+      : "";
+    document.getElementById("edit-status").value =
+      product && product.removedAt ? "下架" : "上架中";
 
     // 重置圖片欄位
     document.getElementById("edit-image").value = "";
@@ -281,11 +295,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const p = currentEditProduct;
-    if (document.getElementById("edit-name").value !== p.productName) return true;
-    if (document.getElementById("edit-description").value !== (p.description || "")) return true;
-    if (String(document.getElementById("edit-points").value) !== String(p.requiredPoints)) return true;
-    if (String(document.getElementById("edit-stock").value) !== String(p.stock)) return true;
-    if (String(document.getElementById("edit-valid-days").value) !== String(p.validDays || "")) return true;
+    if (document.getElementById("edit-name").value !== p.productName)
+      return true;
+    if (
+      document.getElementById("edit-description").value !==
+      (p.description || "")
+    )
+      return true;
+    if (
+      String(document.getElementById("edit-points").value) !==
+      String(p.requiredPoints)
+    )
+      return true;
+    if (String(document.getElementById("edit-stock").value) !== String(p.stock))
+      return true;
+    if (
+      String(document.getElementById("edit-valid-days").value) !==
+      String(p.validDays || "")
+    )
+      return true;
     const currentStatus = document.getElementById("edit-status").value;
     const originalStatus = p.removedAt ? "下架" : "上架中";
     if (currentStatus !== originalStatus) return true;
@@ -323,7 +351,11 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
 
       if (!hasChanges()) {
-        Swal.fire({ title: "無異動", text: "您沒有修改任何資料", icon: "info" });
+        Swal.fire({
+          title: "無異動",
+          text: "您沒有修改任何資料",
+          icon: "info",
+        });
         return;
       }
 
@@ -354,8 +386,11 @@ document.addEventListener("DOMContentLoaded", function () {
           productId: currentEditProduct ? currentEditProduct.productId : null,
           version: currentEditProduct ? currentEditProduct.version : null,
           productName: document.getElementById("edit-name").value.trim(),
-          description: document.getElementById("edit-description").value.trim() || null,
-          requiredPoints: parseFloat(document.getElementById("edit-points").value),
+          description:
+            document.getElementById("edit-description").value.trim() || null,
+          requiredPoints: parseFloat(
+            document.getElementById("edit-points").value,
+          ),
           stock: parseInt(document.getElementById("edit-stock").value),
           validDays: validDaysVal ? parseInt(validDaysVal) : null,
           removedAt: removedAt,
@@ -389,12 +424,13 @@ document.addEventListener("DOMContentLoaded", function () {
   // ===================================================================
 
   const History = {
-    summaryData: [],       // 全部商品彙總資料
+    summaryData: [], // 全部商品彙總資料
     expandedProductId: null, // 目前展開的商品 ID
 
     init() {
       const filterInput = document.getElementById("filterHistoryProduct");
-      if (filterInput) filterInput.addEventListener("input", () => this.renderSummary());
+      if (filterInput)
+        filterInput.addEventListener("input", () => this.renderSummary());
 
       // 切換到 tab 時才載入（避免不必要的請求）
       const historyTab = document.querySelector('[href="#tab-history"]');
@@ -437,9 +473,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const tbody = document.getElementById("historyTableBody");
       if (!tbody) return;
 
-      const kw = (document.getElementById("filterHistoryProduct")?.value || "").toLowerCase().trim();
-      const filtered = this.summaryData.filter((s) =>
-        !kw || s.productName.toLowerCase().includes(kw)
+      const kw = (document.getElementById("filterHistoryProduct")?.value || "")
+        .toLowerCase()
+        .trim();
+      const filtered = this.summaryData.filter(
+        (s) => !kw || s.productName.toLowerCase().includes(kw),
       );
 
       if (filtered.length === 0) {
@@ -521,20 +559,25 @@ document.addEventListener("DOMContentLoaded", function () {
       const params = new URLSearchParams({ productId });
 
       const tbody = document.getElementById(`dt-${productId}`);
-      if (tbody) tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-muted">載入中…</td></tr>`;
+      if (tbody)
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-muted">載入中…</td></tr>`;
 
-      fetch(`${API_BASE}/admin/redemption/detail?${params}`, { credentials: "include" })
+      fetch(`${API_BASE}/admin/redemption/detail?${params}`, {
+        credentials: "include",
+      })
         .then((res) => res.json())
         .then((resp) => {
           if (!checkAuth(resp)) return;
           if (resp.success === 1) {
             this._renderDetail(productId, resp.data || []);
           } else {
-            if (tbody) tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-danger">${resp.errMsg || "載入失敗"}</td></tr>`;
+            if (tbody)
+              tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-danger">${resp.errMsg || "載入失敗"}</td></tr>`;
           }
         })
         .catch(() => {
-          if (tbody) tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-danger">網路連線異常</td></tr>`;
+          if (tbody)
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-danger">網路連線異常</td></tr>`;
         });
     },
 
@@ -547,7 +590,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      tbody.innerHTML = data.map((d) => `
+      tbody.innerHTML = data
+        .map(
+          (d) => `
         <tr>
           <td class="text-muted">${d.exchangedAt || "--"}</td>
           <td><span class="fw-medium text-primary font-monospace">${d.giftCode}</span></td>
@@ -556,16 +601,21 @@ document.addEventListener("DOMContentLoaded", function () {
           <td>${this._statusBadge(d.status)}</td>
           <td class="text-muted">${d.usedAt || "--"}</td>
           <td class="text-muted">${d.expiresAt || "--"}</td>
-        </tr>`).join("");
+        </tr>`,
+        )
+        .join("");
     },
 
     _statusBadge(status) {
       const map = {
         AVAILABLE: '<span class="badge bg-info-subtle text-info">可使用</span>',
         USED: '<span class="badge bg-success-subtle text-success">已使用</span>',
-        EXPIRED: '<span class="badge bg-secondary-subtle text-secondary">已過期</span>',
+        EXPIRED:
+          '<span class="badge bg-secondary-subtle text-secondary">已過期</span>',
       };
-      return map[status] || '<span class="badge bg-light text-dark">未知</span>';
+      return (
+        map[status] || '<span class="badge bg-light text-dark">未知</span>'
+      );
     },
   };
 
@@ -636,7 +686,10 @@ document.addEventListener("DOMContentLoaded", function () {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ onTimeBonus, latePenalty }),
+          body: JSON.stringify({
+            onTimeBonus: parseFloat(onTimeBonus),
+            latePenalty: parseFloat(latePenalty),
+          }),
         })
           .then((res) => res.json())
           .then((resp) => {
