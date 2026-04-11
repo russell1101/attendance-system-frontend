@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         fetch(APP_CONFIG.API_BASE_URL + "/admin/login", {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -33,7 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(resp => resp.json())
             .then(result => {
                 if (result.success == 1) {
-                    location.href = "./rci-echarts-back.html";
+                    if (result.errMsg) {
+                        location.href = result.errMsg;
+                    } else {
+                        location.href = "./rci-echarts-back.html";
+                    }
                 } else {
                     console.log(result.errMsg);
                     alert("使⽤者名稱或密碼錯誤");
