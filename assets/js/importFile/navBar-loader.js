@@ -1,4 +1,17 @@
 // navBar-loader.js - 完整修正版
+
+// 確保 SweetAlert2 已載入，未載入則動態插入（已載入則直接執行 callback）
+function ensureSwal(callback) {
+    if (typeof Swal !== 'undefined') {
+        callback();
+        return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+    script.onload = callback;
+    document.head.appendChild(script);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     console.log("開始載入 NavBar...");
     const navBarContainer = document.querySelector('#navBar-placeholder');
@@ -42,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 initMobileMenu();
                 initDesktopToggle();
                 highlightCurrentMenuItem();
+                initLogout();
             }, 100);
         })
         .catch(error => {
@@ -67,6 +81,12 @@ function initNavBar() {
             link.setAttribute('data-tooltip', text.textContent.trim());
         }
     });
+
+    // 登出按鈕 tooltip
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.setAttribute('data-tooltip', '登出');
+    }
 }
 
 // 初始化桌面版展開/收合（只在桌面版）
@@ -147,6 +167,40 @@ function initMobileMenu() {
         }
         document.body.style.overflow = '';
     }
+}
+
+// 登出
+function initLogout() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (!logoutBtn) return;
+
+    logoutBtn.addEventListener('click', function () {
+        ensureSwal(async function () {
+            const result = await Swal.fire({
+                title: '確定登出？',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '登出',
+                cancelButtonText: '取消',
+            });
+            if (!result.isConfirmed) return;
+
+            try {
+                const res = await fetch(`${APP_CONFIG.API_BASE_URL}/admin/component_logout`, {
+                    method: 'POST',
+                    credentials: 'include',
+                });
+                const resp = await res.json();
+                if (resp.success === 1) {
+                    window.location.href = 'rci-login-backend.html';
+                } else {
+                    Swal.fire('錯誤', resp.errMsg || '登出失敗，請稍後再試', 'error');
+                }
+            } catch (e) {
+                Swal.fire('錯誤', '網路連線異常，請稍後再試', 'error');
+            }
+        });
+    });
 }
 
 // 高亮當前頁面

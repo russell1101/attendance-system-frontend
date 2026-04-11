@@ -10,10 +10,10 @@ body {
     background-color: #f5f5f5;
 }
 
-/* Header 容器 */
+/* ── Header 容器 ── */
 .header {
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
     position: fixed;
     top: 0;
     left: 0;
@@ -28,233 +28,161 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 24px;
 }
 
-/* 左側區域 */
+/* ── 左側 ── */
 .header-left {
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 40px;
 }
 
-/* Logo 區域 */
 .logo-wrapper {
     display: flex;
     align-items: center;
-    width: 140px;
-}
-
-.logo-wrapper a {
-    width: 100%;
-    height: 100%;
 }
 
 .logo-wrapper a img {
-    width: 100%;
-    height: 100%;
+    height: 36px;
+    width: auto;
     object-fit: contain;
+    display: block;
 }
 
-.logo {
-    width: 140px;
-    height: 40px;
-    background-color: #e8e8e8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #999;
-    font-size: 14px;
-    border-radius: 4px;
-}
-
-/* 導航選單 */
+/* ── 導航選單 ── */
 .nav-menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 40px;
-    margin-bottom: 0;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
 }
 
-/* Nav item：用 CSS 自訂屬性統一控制狀態 */
 .nav-item {
     position: relative;
+}
+
+.nav-link {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    cursor: pointer;
-    padding: 10px;
-
-    --icon-filter: none;
-    --link-color: #333333;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    color: #555;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
 }
 
-.nav-item.active,
-.nav-item:hover,
-.nav-item:active,
-.nav-item:focus-within {
-    --icon-filter: invert(41%) sepia(60%) saturate(1663%) hue-rotate(190deg) brightness(99%) contrast(104%);
-    --link-color: #1890ff;
+.nav-icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    transition: stroke 0.18s ease;
 }
 
-/* 拿掉 transition，避免跳頁閃爍 */
-.nav-item img {
-    filter: var(--icon-filter);
+.nav-link:hover {
+    background-color: var(--vz-primary-bg-subtle);
+    color: var(--vz-primary);
 }
 
-/* 加高優先權，贏過 Bootstrap 的 a 預設樣式 */
-.nav-menu .nav-item .nav-link {
-    color: var(--link-color);
-    text-decoration: none;
+.nav-link:hover .nav-icon {
+    stroke: var(--vz-primary);
 }
 
-/* 底部藍條（僅 active 顯示） */
+/* active 狀態 */
+.nav-item.active .nav-link {
+    background-color: var(--vz-primary-bg-subtle);
+    color: var(--vz-primary);
+    font-weight: 600;
+}
+
+.nav-item.active .nav-link .nav-icon {
+    stroke: var(--vz-primary);
+}
+
 .nav-item.active::after {
     content: "";
     position: absolute;
-    bottom: 0;
-    width: 30px;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
     height: 3px;
-    background: #1890ff;
-    border-radius: 2px;
+    background: var(--vz-primary);
+    border-radius: 2px 2px 0 0;
 }
 
-/* 右側區域 */
+/* ── 右側 ── */
 .header-right {
     display: flex;
     align-items: center;
-    gap: 24px;
-}
-
-/* 通知圖標 */
-.notification-icon {
-    display: none;
-    position: relative;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: background-color 0.2s ease;
-}
-
-.notification-icon:hover {
-    background-color: #f5f5f5;
-}
-
-.notification-icon svg {
-    width: 20px;
-    height: 20px;
-    stroke: #666;
-    fill: none;
-    stroke-width: 1.5;
-}
-
-.notification-badge {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 8px;
-    height: 8px;
-    background-color: #ff4d4f;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-}
-
-/* 使用者選單 */
-.user-menu {
-    display: flex;
-    align-items: center;
     gap: 8px;
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 20px;
-    transition: background-color 0.2s ease;
 }
 
-.user-menu:hover {
-    background-color: #f5f5f5;
-}
-
+/* 使用者頭像連結 */
 .user-avatar {
-    width: 32px;
-    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background-color: #e8e8e8;
+    background-color: var(--vz-primary-bg-subtle);
+    border: 1.5px solid var(--vz-primary-border-subtle);
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.user-avatar:hover {
+    background-color: var(--vz-primary-bg-subtle);
+    border-color: var(--vz-primary);
+}
+
+.user-avatar img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    /* 中性深灰，與 nav icon 未選中狀態一致 */
+    filter: brightness(0) invert(35%);
+}
+
+/* 登出按鈕 */
+.logout-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #ffd6d6;
+    background-color: #fff5f5;
+    color: #e53e3e;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
 }
 
-.user-avatar a {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.logout-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    stroke: currentColor;
 }
 
-.user-avatar svg {
-    width: 100%;
-    height: 100%;
-    stroke: #999;
-    fill: none;
-    stroke-width: 1.5;
+.logout-btn:hover {
+    background-color: #e53e3e;
+    border-color: #e53e3e;
+    color: #ffffff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .header-container {
-        padding: 0 16px;
-    }
-
-    .header-left {
-        gap: 30px;
-        justify-content: left;
-    }
-
-    .logo-wrapper {
-        display: none;
-    }
-
-    .nav-menu {
-        gap: 24px;
-    }
-
-    .nav-link {
-        font-size: 14px;
-    }
-
-    .logo {
-        width: 120px;
-        height: 36px;
-    }
-}
-
-@media (max-width: 500px) {
-    .header-right {
-        gap: 5px;
-    }
-
-    .nav-menu {
-        padding: 0;
-        gap: 10px;
-    }
-
-    .nav-item {
-        padding: 0 0 10px 0;
-    }
-
-    .nav-link {
-        white-space: nowrap;
-    }
-
-    .user-menu {
-        padding: 0;
-    }
-}
-
-/* 內容區域（示範用） */
+/* ── 內容區域 ── */
 .content {
     margin-top: 60px;
     padding: 40px 20px;
@@ -279,4 +207,49 @@ body {
 .content-card p {
     color: #666;
     line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 16px;
+    }
+
+    .header-left {
+        gap: 20px;
+    }
+
+    .logo-wrapper {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 7px 10px;
+        font-size: 13px;
+        gap: 5px;
+    }
+
+    .logout-btn span {
+        display: none;
+    }
+
+    .logout-btn {
+        padding: 7px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-menu {
+        gap: 2px;
+    }
+
+    .nav-link {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .nav-icon {
+        width: 15px;
+        height: 15px;
+    }
 }

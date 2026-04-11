@@ -8,87 +8,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
   <meta content="Themesbrand" name="author" />
-  <!-- App favicon -->
   <link rel="shortcut icon" href="assets/images/RCI_LOGO.png" />
-
-  <!-- aos css -->
   <link rel="stylesheet" href="assets/libs/aos/aos.css" />
-
-  <!-- Layout config Js -->
   <script src="assets/js/layout.js"></script>
-  <!-- Bootstrap Css -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <!-- rci-header-front css -->
   <link href="assets/css/rci-header.css" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
   <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
   <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
-  <!-- custom Css-->
   <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-  <!-- Begin page -->
   <div id="layout-wrapper">
     <header class="header">
       <div class="header-container">
-        <!-- 左側區域 -->
+        <!-- 左側：Logo + 導航 -->
         <div class="header-left">
-          <!-- Logo -->
           <div class="logo-wrapper">
             <a href="rci-front-clockin.html">
-              <img src="assets/images/rci-logo.png" alt="" />
+              <img src="assets/images/rci-logo.png" alt="RCI Logo" />
             </a>
           </div>
 
-          <!-- 導航選單 -->
           <nav>
             <ul class="nav-menu">
-              <li class="nav-item active">
-                <img id="header-lang-img" src="assets/images/page/Home20Regular.svg" alt="Header Language" height="20"
-                  class="rounded" />
-                <a href="rci-front-clockin.html" class="nav-link">主頁</a>
+              <li class="nav-item">
+                <a href="rci-front-clockin.html" class="nav-link">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+                    <path d="M9 21V12h6v9"/>
+                  </svg>
+                  <span>主頁</span>
+                </a>
               </li>
               <li class="nav-item">
-                <img id="header-lang-img" src="assets/images/page/ClipboardBulletListLtr16Regular.svg"
-                  alt="Header Language" height="20" class="rounded" />
-                <a href="rci-company-policy-front.html" class="nav-link">公司規範</a>
+                <a href="rci-company-policy-front.html" class="nav-link">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="9" y1="13" x2="15" y2="13"/>
+                    <line x1="9" y1="17" x2="13" y2="17"/>
+                  </svg>
+                  <span>公司規範</span>
+                </a>
               </li>
               <li class="nav-item">
-                <img id="header-lang-img" src="assets/images/page/LocalMallOutlined.svg" alt="Header Language"
-                  height="20" class="rounded" />
-                <a href="rci-front-products.html" class="nav-link">紅利商城</a>
+                <a href="rci-front-products.html" class="nav-link">
+                  <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                  </svg>
+                  <span>紅利商城</span>
+                </a>
               </li>
-            
             </ul>
           </nav>
         </div>
 
-        <!-- 右側區域 -->
+        <!-- 右側：個人 + 登出 -->
         <div class="header-right">
-          <!-- 通知圖標 -->
-          <div class="notification-icon">
-            <img id="header-lang-img" src="assets/images/users/Bell.svg" alt="Header Language" height="20"
-              class="rounded" />
-            <span class="notification-badge"></span>
-          </div>
+          <a href="rci-front-profile.html" class="user-avatar" title="個人資料">
+            <img src="assets/images/users/Person20Regular.svg" alt="個人資料" />
+          </a>
 
-          <!-- 使用者選單 -->
-          <div class="user-menu">
-            <div class="user-avatar">
-                <a href="rci-front-profile.html">
-                  <img id="header-lang-img" src="assets/images/users/Person20Regular.svg" alt="Header Language" height="20"
-                class="rounded" />
-                </a>
-              <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
-            </div>
-          </div>
+          <button class="logout-btn" id="headerLogoutBtn" title="登出">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>登出</span>
+          </button>
         </div>
       </div>
     </header>
 
-    <!-- JAVASCRIPT -->
     <script src="assets/js/importFile/header-loader.js"></script>
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
@@ -96,16 +90,11 @@
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="assets/js/plugins.js"></script>
-
-    <!-- aos js -->
     <script src="assets/libs/aos/aos.js"></script>
-    <!-- prismjs plugin -->
     <script src="assets/libs/prismjs/prism.js"></script>
-    <!-- animation init -->
     <script src="assets/js/pages/animation-aos.init.js"></script>
-
-    <!-- App js -->
     <script src="assets/js/app.js"></script>
+  </div>
 </body>
 
 </html>
