@@ -85,16 +85,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-soft-secondary btn-sm dropdown para update" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-soft-secondary btn-sm dropdown para update" type="button" aria-expanded="false">
                                 <i class="ri-pencil-fill align-middle"></i>
                             </button>
                             <div class="reveal -none">
-                                <button class="btn btn-soft-secondary btn-sm dropdown update-save" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-soft-secondary btn-sm dropdown update-save" type="button" aria-expanded="false">
                                     <i class="ri-save-fill align-middle"></i>
                                 </button>
                             </div>
                         </td>
-                        <td><button class="btn btn-soft-secondary btn-sm dropdown remove" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <td><button class="btn btn-soft-secondary btn-sm dropdown remove" type="button" aria-expanded="false">
                                     <i class="ri-delete-bin-2-line align-middle"></i>
                                 </button></td>
                     </tr>

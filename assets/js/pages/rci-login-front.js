@@ -32,7 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(resp => resp.json())
             .then(result => {
                 if (result.success == 1) {
-                    location.href = "./rci-front-clockin.html";
+                    if (result.errMsg) {
+                        location.href = result.errMsg;
+                    } else {
+                        location.href = "./rci-front-clockin.html";
+                    }
                 } else {
                     console.log(result.errMsg);
                     alert("信箱或密碼錯誤");
