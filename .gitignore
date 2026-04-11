@@ -7,6 +7,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# IntelliJ / WebStorm / IDEA
+.idea/
+
 # Logs
 *.log
 
