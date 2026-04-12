@@ -33,9 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => {
                 if (result.success == 1) {
                     if (result.errMsg) {
-                        if (result.errMsg.includes('front')) {
-                            location.href = "./rci-echarts-back.html";
-                        }
                         location.href = result.errMsg;
                     } else {
                         location.href = "./rci-echarts-back.html";
