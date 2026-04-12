@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(result => {
                 if (result.success == 1) {
                     if (result.errMsg) {
+                        if (result.errMsg.includes('back')) {
+                            location.href = "./rci-front-clockin.html";
+                        }
                         location.href = result.errMsg;
                     } else {
                         location.href = "./rci-front-clockin.html";
