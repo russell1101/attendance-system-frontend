@@ -68,19 +68,16 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   ws.onopen = function () {
-    console.log("WebSocket 已連線");
     searchChart();
   };
 
   ws.onmessage = function (event) {
     if (event.data === "clockUpdate") {
-      console.log("收到打卡更新，重新載入圖表");
       searchChart();
     }
   };
 
   ws.onclose = function () {
-    console.log("WebSocket 已斷線");
   };
 
   // 監聽視窗大小變化
@@ -175,7 +172,6 @@ function loadDepartments() {
       }
     })
     .catch(function (err) {
-      console.log("載入部門失敗:", err);
     });
 }
 
@@ -206,7 +202,6 @@ function loadEmployees(deptId) {
       }
     })
     .catch(function (err) {
-      console.log("載入員工失敗:", err);
     });
 }
 
@@ -244,7 +239,6 @@ function searchChart() {
       return res.json();
     })
     .then(function (data) {
-      console.log("圖表資料:", data);
 
       // 1. 更新圓餅圖
       updatePieChart(data.onTime, data.late, data.absent);
@@ -279,7 +273,6 @@ function searchChart() {
       resizeAllCharts();
     })
     .catch(function (err) {
-      console.log("搜尋失敗:", err);
     });
 }
 

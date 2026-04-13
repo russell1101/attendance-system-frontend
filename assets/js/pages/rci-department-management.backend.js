@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </td>
                         <td>
-                            <p class="para ">${department.onTimeBonusPoints}</p>
+                            <p class="para ">${department?.onTimeBonusPoints || "未設定"}</p>
                             <div class="reveal -none">
                                 <input type="number" class="form-control update-onTimeAdd" placeholder="請輸入增加點數" value="${department.onTimeBonusPoints}">
                             </div>
                         </td>
                         <td>
-                            <p class="para ">${department.latePenaltyPoints}</p>
+                            <p class="para ">${department?.latePenaltyPoints || "未設定"}</p>
                             <div class="reveal -none">
                                 <input type="number" class="form-control update-lateTimeMinus" placeholder="請輸入減少點數" value="${department.latePenaltyPoints}">
                             </div>
@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     `
                 })
             } else {
-                console.log(result.errMsg);
                 alert("資料讀取失敗");
             }
         })
