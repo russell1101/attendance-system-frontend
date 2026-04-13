@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const float_end_btn = document.querySelector("div.float-end");
-    float_end_btn.addEventListener("click", function () {
-        alert("請聯絡後台");
-    })
 
     let email = document.querySelector("#email");
     let password = document.querySelector("#password-input");
     let btn_login = document.querySelector("button.btn-success");
+    let btn_password_addon = document.querySelector("#password-addon");
+
+    btn_password_addon.addEventListener("click", function () {
+        const isPassword = password.type === "password";
+        password.type = isPassword ? "text" : "password";
+        btn_password_addon.querySelector("i").className = isPassword
+            ? "ri-eye-off-fill align-middle"
+            : "ri-eye-fill align-middle";
+    });
 
     btn_login.addEventListener("click", function () {
         if (!email.value) {
@@ -38,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         location.href = "./rci-front-clockin.html";
                     }
                 } else {
-                    console.log(result.errMsg);
                     alert("信箱或密碼錯誤");
                 }
             })

@@ -79,8 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="reveal -none">
                                 <select name="status" class="form-select update-status">
                                 <option value="${employee.employeeStatusId}" selected>${employee.employeeStatus}</option>
-                                <option value="1">在職</option>
-                                <option value="2">離職</option>
+                                ${employee.employeeStatusId != 1 ? `<option value="1">在職</option>` : ''}
+                                ${employee.employeeStatusId != 2 ? `<option value="2">離職</option>` : ''}
                             </select>
                             </div>
                         </td>
@@ -101,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     `
                 })
             } else {
-                console.log(result.errMsg);
                 alert("資料讀取失敗");
             }
         })

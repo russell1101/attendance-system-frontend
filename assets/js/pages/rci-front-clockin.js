@@ -96,24 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // [開發階段專用] 模擬登入
-  const devMockLogin = async () => {
-    try {
-      const response = await fetch(
-        `${APP_CONFIG.API_BASE_URL}/frontUser/mock-login/1`,
-        { credentials: "include" }
-      );
-      const result = await response.json();
-      console.log("🔧 模擬登入執行結果:", result.message || "成功");
-    } catch (error) {
-      console.error("🔧 模擬登入失敗:", error);
-    }
-  };
-
-  // TODO 正式改直接呼叫 先等模擬登入把 Session 建立好，再開始跑邏輯
-  //   devMockLogin().then(() => {
-  //     loadClockStatus();
-  //   });
 
   loadClockStatus();
 

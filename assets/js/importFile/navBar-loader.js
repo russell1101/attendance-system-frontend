@@ -13,7 +13,7 @@ function ensureSwal(callback) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("開始載入 NavBar...");
+    
     const navBarContainer = document.querySelector('#navBar-placeholder');
     
     if (!navBarContainer) {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.text();
         })
         .then(data => {
-            console.log("NavBar HTML 載入成功");
+            
             
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = data;
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // 初始化 NavBar
 function initNavBar() {
-    console.log("初始化 NavBar...");
+    
     
     if (typeof feather !== 'undefined') {
         feather.replace();
@@ -116,8 +116,8 @@ function initDesktopToggle() {
 
 // 初始化手機選單
 function initMobileMenu() {
-    console.log("初始化手機選單...");
-    console.log("視窗寬度:", window.innerWidth);
+    
+    
     
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -133,7 +133,7 @@ function initMobileMenu() {
     sidebarToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log("漢堡選單被點擊");
+        
         
         sidebar.classList.add('active');
         if (sidebarOverlay) {
@@ -157,7 +157,7 @@ function initMobileMenu() {
     }
     
     function closeSidebar() {
-        console.log("關閉側邊欄");
+        
         sidebar.classList.remove('active');
         if (sidebarOverlay) {
             sidebarOverlay.classList.remove('active');
