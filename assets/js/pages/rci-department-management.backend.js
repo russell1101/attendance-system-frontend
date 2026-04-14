@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (add_form) {
             btn_save.addEventListener("click", function () {
+                btn_save.classList.add("disabled");
                 fetch(APP_CONFIG.API_BASE_URL + '/admin/dep/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
