@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             `
             btn_save.addEventListener("click", function () {
-                btn_save.classList.add("disabled");
+                this.disabled = true;
                 fetch(APP_CONFIG.API_BASE_URL + '/admin/emp/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
